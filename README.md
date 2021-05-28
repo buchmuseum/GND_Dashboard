@@ -29,3 +29,9 @@ data/
 
 Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 
+## Auswertungen
+
+| Datei                              | Bemerkung                            |
+| ---------------------------------- | ------------------------------------ |
+| `data/user/entity_types_stats.csv` | Anzahl von Entitäten pro Entitätstyp |
+
