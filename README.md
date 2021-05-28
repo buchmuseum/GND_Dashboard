@@ -31,7 +31,9 @@ Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 
 ## Auswertungen
 
-| Datei                              | Bemerkung                            |
-| ---------------------------------- | ------------------------------------ |
-| `data/user/entity_types_stats.csv` | Anzahl von Entitäten pro Entitätstyp |
+| Datei                           | Bemerkung                                       |
+| ------------------------------- | ----------------------------------------------- |
+| `stats/link_count.csv`          | Anzahl der Verknüpfungen mit DNB-Titeln         |
+| `stats/link_count_unique.csv`   | Anzahl der verknüpften Entitäten mit DNB-Titeln |
+| `stats/entity_types.csv`        | Anzahl von Entitäten pro Entitätstyp            |
 
