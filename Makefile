@@ -22,7 +22,7 @@ prepare:
 # PARTITIONS
 #
 
-partitions: $(DUMPFILE)
+partitions: $(DUMPFILE) | prepare
 	$(PICA) partition "002@.0" --skip-invalid $< -o $(PARTITIONS)
 
 #
@@ -50,18 +50,18 @@ $(USERDIR)/041A_9.csv: $(USERDIR)/titel.dat
 # STATS
 #
 
-stats: title-analysis | prepare
+STATSOBJ := entity_types.csv gnd_systematik.csv
+stats: $(addprefix $(STATSDIR)/,$(STATSOBJ)) title-analysis | prepare
 
 title-analysis: $(USERDIR)/041A_9.csv
 	$(SCRIPTS)/title.py $<
 
-# $(STATSDIR)/entity_top10.csv: $(USERDIR)/041A_9.csv
-# 	$(SCRIPTS)/top_n.py $< 10
+$(STATSDIR)/entity_types.csv: $(USERDIR)/gnd.dat
+	$(PICA) frequency "002@.0" $< -o $@
 
-# $(STATSDIR)/entity_types.csv: $(USERDIR)/gnd.dat
-# 	$(PICA) frequency "002@.0" $< -o $@
-
-# $(STATSDIR)/titel_topn.csv: $(USERDIR)/gnd.dat
+$(STATSDIR)/gnd_systematik.csv: $(USERDIR)/gnd.dat
+	$(PICA) frequency "042A.a" $< -o $@
+	$(SCRIPTS)/gnd_systematik.py $@
 
 #
 # ALL
