@@ -36,4 +36,6 @@ Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 | `stats/link_count.csv`          | Anzahl der Verknüpfungen mit DNB-Titeln         |
 | `stats/link_count_unique.csv`   | Anzahl der verknüpften Entitäten mit DNB-Titeln |
 | `stats/entity_types.csv`        | Anzahl von Entitäten pro Entitätstyp            |
+| `stats/gnd_top10.csv`           | Top-10 verknüpfte GND-Entitäten                 |
+| `stats/T[bfgpsu]_top10.csv`     | Top-10 verknüpfte GND-ENtitäten (pro Typ)       |
 

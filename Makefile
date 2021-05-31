@@ -29,7 +29,7 @@ partitions: $(DUMPFILE)
 # USER DUMPS
 #
 
-USEROBJ := T.dat titel.dat gnd.dat
+USEROBJ := T.dat titel.dat gnd.dat 041A_9.csv
 user: $(addprefix $(USERDIR)/,$(USEROBJ)) | prepare
 
 $(USERDIR)/T.dat: partitions
@@ -41,21 +41,27 @@ $(USERDIR)/gnd.dat: $(USERDIR)/T.dat
 $(USERDIR)/titel.dat: $(DUMPFILE)
 	$(PICA) filter -s -v "002@.0 =^ 'T'" $< -o $@
 
+$(USERDIR)/041A_9.csv: $(USERDIR)/titel.dat
+	$(PICA) filter "041A/*.9?" $< -o $(TEMPDIR)/041A_9.dat
+	$(PICA) select "003@.0,041A/*{9?, 9, 7, a}" $(TEMPDIR)/041A_9.dat \
+		-H "idn,gnd_id,bbg,name" -o $@
+
 #
 # STATS
 #
 
-STATSOBJ = entity_types.csv
-stats: $(addprefix $(STATSDIR)/,$(STATSOBJ)) title-analysis | prepare
+stats: title-analysis | prepare
 
-title-analysis: $(USERDIR)/titel.dat
-	$(PICA) filter "041A/*.9?" $< -o $(TEMPDIR)/041A_9.dat
-	$(PICA) select "003@.0,041A/*{9?, 9, 7, a}" $(TEMPDIR)/041A_9.dat \
-		-H "idn,gnd_id,bbg,name" -o $(TEMPDIR)/041A_9.csv
-	$(SCRIPTS)/041A_9.py $(TEMPDIR)/041A_9.csv
+title-analysis: $(USERDIR)/041A_9.csv
+	$(SCRIPTS)/title.py $<
 
-$(STATSDIR)/entity_types.csv: $(USERDIR)/gnd.dat
-	$(PICA) frequency "002@.0" $< -o $@
+# $(STATSDIR)/entity_top10.csv: $(USERDIR)/041A_9.csv
+# 	$(SCRIPTS)/top_n.py $< 10
+
+# $(STATSDIR)/entity_types.csv: $(USERDIR)/gnd.dat
+# 	$(PICA) frequency "002@.0" $< -o $@
+
+# $(STATSDIR)/titel_topn.csv: $(USERDIR)/gnd.dat
 
 #
 # ALL
