@@ -30,6 +30,8 @@ partitions: $(DUMPFILE) | prepare
 #
 
 USEROBJ := T.dat titel.dat gnd.dat 041A_9.csv
+USEROBJ += 022R.csv 028R.csv 029R.csv 030R.csv 041R.csv 065R.csv 0XXR.csv
+
 user: $(addprefix $(USERDIR)/,$(USEROBJ)) | prepare
 
 $(USERDIR)/T.dat: partitions
@@ -46,11 +48,32 @@ $(USERDIR)/041A_9.csv: $(USERDIR)/titel.dat
 	$(PICA) select "003@.0,041A/*{9?, 9, 7, a}" $(TEMPDIR)/041A_9.dat \
 		-H "idn,gnd_id,bbg,name" -o $@
 
+$(USERDIR)/022R.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "022R.9?" $< | $(PICA) select "003@.0,022R{9?, 9, 7, a, 4}" -H "idn,gnd_id,bbg,name,code" -o $@
+
+$(USERDIR)/028R.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "028R.9?" $< | $(PICA) select "003@.0,028R{9?, 9, 7, a, 4}" -H "idn,gnd_id,bbg,name,code" -o $@
+
+$(USERDIR)/029R.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "029R.9?" $< | $(PICA) select "003@.0,029R{9?, 9, 7, a, 4}" -H "idn,gnd_id,bbg,name,code" -o $@
+
+$(USERDIR)/030R.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "030R.9?" $< | $(PICA) select "003@.0,030R{9?, 9, 7, a, 4}" -H "idn,gnd_id,bbg,name,code" -o $@
+
+$(USERDIR)/041R.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "041R.9?" $< | $(PICA) select "003@.0,041R{9?, 9, 7, a, 4}" -H "idn,gnd_id,bbg,name,code" -o $@
+
+$(USERDIR)/065R.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "065R.9?" $< | $(PICA) select "003@.0,065R{9?, 9, 7, a, 4}" -H "idn,gnd_id,bbg,name,code" -o $@
+
+$(USERDIR)/0XXR.csv: $(USERDIR)/022R.csv $(USERDIR)/028R.csv $(USERDIR)/029R.csv $(USERDIR)/030R.csv $(USERDIR)/041R.csv $(USERDIR)/065R.csv
+	cat $^ > $@
+
 #
 # STATS
 #
 
-STATSOBJ := entity_types.csv gnd_systematik.csv
+STATSOBJ := entity_types.csv gnd_count.csv gnd_systematik.csv gnd_rel_count.csv
 stats: $(addprefix $(STATSDIR)/,$(STATSOBJ)) title-analysis | prepare
 
 title-analysis: $(USERDIR)/041A_9.csv
@@ -63,11 +86,17 @@ $(STATSDIR)/gnd_systematik.csv: $(USERDIR)/gnd.dat
 	$(PICA) frequency "042A.a" $< -o $@
 	$(SCRIPTS)/gnd_systematik.py $@
 
+$(STATSDIR)/gnd_count.csv: $(USERDIR)/gnd.dat
+	wc -l $< | cut -d" " -f1 > $@
+
+$(STATSDIR)/gnd_rel_count.csv: $(USERDIR)/0XXR.csv
+	wc -l $< | cut -d" " -f1 > $@
+
 #
 # ALL
 #
 
-all: partitions user stats | prepare
+all: user stats | prepare
 
 #
 # CLEAN
