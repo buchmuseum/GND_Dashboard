@@ -52,13 +52,13 @@ def main():
         Tx_top10[:10].to_csv(f"stats/title_gnd_top10_{bbg}.csv")
 
     # Durchschnittliche Anzahl an Verknüpfungen pro DNB-Titel
-    with open("stats/gnd_mean.csv", "w") as f:
+    with open("stats/title_gnd_mean.csv", "w") as f:
         f.write(str(mean(df, None)))
 
     for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
         Tx_mean = mean(df, bbg)
 
-        with open(f"stats/{bbg}_mean.csv", "w") as f:
+        with open(f"stats/title_gnd_mean_{bbg}.csv", "w") as f:
             f.write(str(Tx_mean))
 
 
