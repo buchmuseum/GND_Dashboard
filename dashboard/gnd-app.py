@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import pydeck as pdk
+import os
 
 st.sidebar.header("Satzart wählen")
 satzart = st.sidebar.selectbox(
@@ -10,7 +11,9 @@ satzart = st.sidebar.selectbox(
 )
 
 def ramon():
-    df = pd.read_csv('./wirkungsorte-top50.csv')
+    path = os.path.dirname(__file__)
+    my_file = path+'/photo.png'
+    df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
     df.drop(columns=['id'], inplace=True)
     
     graph_count = alt.Chart(df).mark_bar().encode(x=alt.X('name:N', sort='y'), y='count', tooltip=['name', 'count'])
