@@ -45,7 +45,7 @@ def main():
 
     # TOP-10 verknüpfte Entitäten
     gnd_top10 = top10(df, None)
-    gnd_top10[:10].to_csv("stats/gnd_top10.csv")
+    gnd_top10[:10].to_csv("stats/title_gnd_top10.csv")
 
     for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
         Tx_top10 = top10(df, bbg)
