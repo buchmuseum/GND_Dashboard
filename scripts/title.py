@@ -36,11 +36,11 @@ def main():
     df = df[pd.notna(df["bbg"])]
 
     # Anzahl der Verknüpfungen von DNB-Titeln und GND-Entitäten.
-    with open("stats/link_count.csv", "w") as f:
+    with open("stats/title_gnd_links.csv", "w") as f:
         f.write(str(len(df)))
 
     # Anzahl an verknüpften GND-Entitäten mit DNB-Titeln (unique).
-    with open("stats/link_count_unique.csv", "w") as f:
+    with open("stats/title_gnd_links_unique.csv", "w") as f:
         f.write(str(len(df["gnd_id"].unique())))
 
     # TOP-10 verknüpfte Entitäten
