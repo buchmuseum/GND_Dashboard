@@ -41,14 +41,14 @@ Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 
 ## Entitätstypen
 
-* ..
+* [title_gnd_top10_T{bfgpsu}.csv](stats/title_gnd_top10_Tp.csv) — Top10 GND-Entitäten in den DNB-Titeldaten (pro Entitätstyp)
+
 
 ## Alt
 
 | Datei                            | Bemerkung                                           |
 | -------------------------------- | --------------------------------------------------- |
 | `stats/gnd_mean.csv`             | Durschnittl. Anzahl verknüpfter Entitäten           |
-| `stats/T[bfgpsu]_top10.csv`      | Top-10 verknüpfte Entitäten (pro Typ)               |
 | `stats/T[bfgpsu]_mean.csv`       | Durschnittl. Anzahl verknüpfter Entitäten (pro Typ) |
 | `stats/gnd_systematik_top10.csv` | Top-10 GND-Systematik-Nummern                       |
 | `stats/gnd_rel_count.csv`        | Anzahl der Relationen innerhalb der GND             |
