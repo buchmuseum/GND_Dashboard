@@ -31,15 +31,24 @@ Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 
 ## Auswertungen
 
+## Allgemein
+
+* [gnd_entity_count.csv](stats/gnd_entity_count.csv) — Anzahl Entitäten in der GND.
+* [gnd_entity_types.csv](stats/gnd_entity_types.csv) — Verteilung Entitätentypen.
+
+## Entitätstypen
+
+* ..
+
+## Alt
+
 | Datei                            | Bemerkung                                           |
 | -------------------------------- | --------------------------------------------------- |
 | `stats/link_count.csv`           | Anzahl der Verknüpfungen mit DNB-Titeln             |
 | `stats/link_count_unique.csv`    | Anzahl der verknüpften Entitäten mit DNB-Titeln     |
-| `stats/entity_types.csv`         | Anzahl von Entitäten pro Typ                        |
 | `stats/gnd_top10.csv`            | Top-10 verknüpfte Entitäten                         |
 | `stats/gnd_mean.csv`             | Durschnittl. Anzahl verknüpfter Entitäten           |
 | `stats/T[bfgpsu]_top10.csv`      | Top-10 verknüpfte Entitäten (pro Typ)               |
 | `stats/T[bfgpsu]_mean.csv`       | Durschnittl. Anzahl verknüpfter Entitäten (pro Typ) |
-| `stats/gnd_count.csv`            | Anzahl GND-Enitäten                                 |
 | `stats/gnd_systematik_top10.csv` | Top-10 GND-Systematik-Nummern                       |
 | `stats/gnd_rel_count.csv`        | Anzahl der Relationen innerhalb der GND             |

@@ -34,7 +34,8 @@ USEROBJ += 022R.csv 028R.csv 029R.csv 030R.csv 041R.csv 065R.csv 0XXR.csv
 
 user: $(addprefix $(USERDIR)/,$(USEROBJ)) | prepare
 
-$(USERDIR)/T.dat: partitions
+# $(USERDIR)/T.dat: partitions
+$(USERDIR)/T.dat:
 	$(PICA) cat $(PARTITIONS)/T*.dat -o $@
 
 $(USERDIR)/gnd.dat: $(USERDIR)/T.dat
@@ -73,21 +74,22 @@ $(USERDIR)/0XXR.csv: $(USERDIR)/022R.csv $(USERDIR)/028R.csv $(USERDIR)/029R.csv
 # STATS
 #
 
-STATSOBJ := entity_types.csv gnd_count.csv gnd_systematik.csv gnd_rel_count.csv
+STATSOBJ := gnd_entity_types.csv gnd_entity_count.csv gnd_systematik.csv gnd_rel_count.csv
 stats: $(addprefix $(STATSDIR)/,$(STATSOBJ)) title-analysis | prepare
+
+$(STATSDIR)/gnd_entity_count.csv: $(USERDIR)/gnd.dat
+	wc -l $< | cut -d" " -f1 > $@
+
+$(STATSDIR)/gnd_entity_types.csv: $(USERDIR)/gnd.dat
+	$(PICA) frequency "002@.0" $< -o $@
 
 title-analysis: $(USERDIR)/041A_9.csv
 	$(SCRIPTS)/title.py $<
-
-$(STATSDIR)/entity_types.csv: $(USERDIR)/gnd.dat
-	$(PICA) frequency "002@.0" $< -o $@
 
 $(STATSDIR)/gnd_systematik.csv: $(USERDIR)/gnd.dat
 	$(PICA) frequency "042A.a" $< -o $@
 	$(SCRIPTS)/gnd_systematik.py $@
 
-$(STATSDIR)/gnd_count.csv: $(USERDIR)/gnd.dat
-	wc -l $< | cut -d" " -f1 > $@
 
 $(STATSDIR)/gnd_rel_count.csv: $(USERDIR)/0XXR.csv
 	wc -l $< | cut -d" " -f1 > $@
