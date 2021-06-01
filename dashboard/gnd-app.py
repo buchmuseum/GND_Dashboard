@@ -68,7 +68,7 @@ def stat_allgemein():
         st.write(f"GND-Entitäten gesamt: {entities.replace(',','.')}")
     
     #Entities nach Typ
-    df = pd.read_csv('../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
+    df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
     df['level'] = df.entity.str[2:]
     df.entity = df.entity.str[:2]
 
@@ -86,7 +86,7 @@ def stat_allgemein():
         relations = f'{int(f.read()):,}'
         st.write(f"Relationen zwischen Entitäten gesamt: {relations.replace(',','.')}")
 
-    rels = pd.read_csv('../stats/gnd_codes_top10.csv', index_col=False)
+    rels = pd.read_csv(f'{path}/../stats/gnd_codes_top10.csv', index_col=False)
     relation_count = alt.Chart(rels).mark_bar().encode(
         alt.X('code', title='Relationierungs-Code'),
         alt.Y('count', title='Anzahl'),
