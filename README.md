@@ -55,6 +55,8 @@ Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 * [gnd_releation_count.csv](stats/gnd_relation_count.csv) — Anzahl Relationen in der GND (Felder 028R, 029R, 030R, 022R, 041R, 065R)
 * [gnd_classification_all.csv](stats/gnd_classification_all.csv) — Verteilung der GND-Systematik (Feld 042A.a)
 * [gnd_classification_top10.csv](stats/gnd_classification_top10.csv) — Top10 GND-Systematik
+* [gnd_codes_all.csv](stats/gnd_codes_all.csv) — Verteilung der Releation-Codes
+* [gnd_codes_top10.csv](stats/gnd_codes_top10.csv) — Top10 Verteilung der Releation-Codes
 * [title_gnd_links.csv](stats/title_gnd_links.csv) — Anzahl GND-Verknüpfungen in DNB-Titeldaten
 * [title_gnd_links_unique.csv](stats/title_gnd_links_unique.csv) — Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
 * [title_gnd_top10.csv](stats/title_gnd_top10.csv) — Top10 GND-Entitäten in den DNB-Titeldaten
