@@ -1,0 +1,417 @@
+id,count,name
+15.3p,179586,Personen zu Film
+13.4p,126067,"Personen zu Malerei, Zeichnung, Grafik"
+14.1,125339,"Musik (Allgemeines), Musikgeschichte"
+14.4p,107141,Personen zu Musik
+10.12b,95088,Einzelne Branchen der Industrie und des Handwerks
+12.2p,93449,Personen zu Literaturgeschichte (Schriftsteller)
+16.5p,79279,Personen der Geschichte (Politiker und historische Persönlichkeiten)
+31.3ab,68099,Ortsgebundene Bauwerke
+2.2,62570,"Buchwissenschaft, Buchhandel"
+3.6p,57728,"Personen zu Kirchengeschichte, Systematischer und Praktischer Theologie, Kirche und Konfession"
+3.5a,42422,"Liturgik, Frömmigkeit"
+13.5p,36749,Personen zu Fotografie
+9.3c,28243,"Gruppe, Organisationssoziologie, Interaktion"
+13.2p,27424,Personen zu Plastik
+00m,26081,Maschinell eingespielte Datensätze (Platzhalter)
+16.1p,25065,"Personen der Geschichtswissenschaft (Historiker, Archäologen)"
+13.7p,24190,Personen zu neuen Formen der Kunst
+31.3p,22931,"Personen zu Architektur, Bautechnik"
+13.1bp,22353,
+7.14p,20032,Personen zu Recht
+6.4p,19873,Personen zu Bildungswesen
+3.6a,19244,Katholische Kirche
+6.8,18714,"Archiv, Museum"
+31.16p,18506,"Personen zu Technik (ohne Architektur, Bautechnik)"
+3.2aa,17466,Teile des Alten Testamentes
+13.6p,17175,Personen zu Kunsthandwerk
+2.3p,16597,Personen zu Presse
+27.20p,16347,"Personen zu Medizin, Tiermedizin"
+19.1b,16037,Physische Geografie
+8.4,15829,Militär
+8.4p,15829,"Personen zu politischer Theorie, Militär"
+6.6,15239,Hochschule
+3.2ba,13944,Teile des Neuen Testamentes
+00p,13889,Sachlich nicht klassifizierbare Personen
+12.1p,13790,Personen zu Literaturwissenschaft (Literaturwissenschaftler)
+3,13762,
+15.1p,13593,"Personen zu Theater, Tanz"
+11.2p,13543,Personen zu Sprache
+4.7p,12774,Personen zu Philosophie
+13.1a,12770,Bildende Kunst
+10.6a,11687,Telekommunikation und Verkehr
+6.3a,11534,Schule
+34.3,10742,Einzelne Sportarten
+22.5,10170,Organische Chemie
+10.12p,9636,"Personen zu Gewerbe allgemein, Industrie, Handwerk"
+2.1,9624,"Schrift, Handschriftenkunde"
+30m,9014,Informatikprodukte (Hardware- und Softwareprodukte)
+8.2b,8612,"Parteien, Politische Organisationen"
+31.7,8220,"Fahrzeugbau, Fördertechnik, Raumfahrttechnik"
+3.1p,8204,"Personen zu allgemeiner und vergleichender Religionswissenschaft, Personen zu"
+15.3,7759,Film
+7.15a,7742,"Öffentliche Verwaltung, Öffentlicher Dienst"
+9.5p,7716,"Personen zu Soziologie, Gesellschaft, Arbeit, Sozialgeschichte"
+11.1a,7694,Sprache (Allgemeines)
+12.4,7674,"Literarische Motive, Stoffe, Gestalten"
+2.3,7656,Presse
+2.2p,7543,"Personen zu Buchwissenschaft, Buchhandel"
+13.1c,7514,Sachliche Motive in der Kunst
+10.2dp,7509,Personen zu Wirtschaftswissenschaften
+19.3,7432,"Hydrologie, Meereskunde"
+9.5c,7378,"Sozialarbeit, Sozialhilfe"
+6.7,7239,"Bibliothek, Information und Dokumentation"
+28,7115,Mathematik
+3.1,7074,"Allgemeine und vergleichende Religionswissenschaft, Nichtchristliche Religionen"
+25.3,7016,Spezielle Zoologie
+16.5,6723,Geschichte einzelner Länder und Völker
+17.2,6571,"Brauchtum, Volksglaube"
+31.3a,6466,Architektur
+3.6b,6338,Evangelische Kirchen
+6.1a,6256,"Kultur, Künste allgemein"
+15.1,6192,"Theater, Tanz"
+27.20,6178,"Hygiene, Gesundheitswesen"
+16.3,6157,"Archäologie, Vor- und Frühgeschichte"
+24.3,5776,Spezielle Botanik
+32.10p,5492,"Personen zu Landwirtschaft, Garten"
+13.6,5282,Kunsthandwerk
+17.1,5252,"Volkskunde, Völkerkunde (Allgemeines)"
+14.4,5228,Systematische und Angewandte Musikwissenschaft
+10.7b,5207,"Raumordnung, Stadtplanung, Landschaftsgestaltung"
+23.2,5103,"Biochemie, Biophysik, Zytologie"
+7.15p,5103,Personen zu öffentlicher Verwaltung
+6.5,4929,Wissenschaft
+7.13,4889,"Religionsrecht, Kirchenrecht, Staatskirchenrecht"
+34.3p,4819,Personen zu Sport
+34.1,4590,Sport (Allgemeines)
+30,4471,"Informatik, Datenverarbeitung"
+9.4ab,4423,"Einzelne Berufe, Tätigkeiten, Funktionen; Religionszugehörigkeit, Weltanschauung"
+10.13b,4310,"Handel einzelner Branchen, Dienstleistung einzelner Branchen"
+10.7a,4132,"Umweltschutz, Umweltbelastung"
+28p,4122,Personen zu Mathematik
+19.1dp,4082,"Personen zu Geografie, Heimat- und Länderkunde"
+6.1p,4022,"Personen zu Kultur und Künsten, Geistes- und Kulturgeschichte"
+6.2a,4004,Bildungswesen (Allgemeines)
+10.13p,3977,"Personen zu Handel, Dienstleistung"
+31.10,3974,"Verfahrenstechnik, Technische Chemie"
+13.2,3939,Plastik
+19.1a,3919,"Geografie, Heimat- und Länderkunde (Allgemeines)"
+31.14,3872,"Papierherstellung, Grafische Technik"
+31.3b,3866,Bautechnik
+9.4a,3845,Arbeit
+31.9b,3765,"Elektronik, Nachrichtentechnik"
+13.4,3755,"Zeichnung, Grafik"
+22.4,3684,Anorganische Chemie
+17.4p,3643,"Personen zu Volkskunde, Völkerkunde"
+6.7p,3626,"Personen zu Bibliothek, Information und Dokumentation"
+18,3604,"Natur, Naturwissenschaften allgemein"
+12.1b,3563,Literarisches Leben
+27.8a,3537,"Pharmazie, Pharmakologie, Toxikologie"
+10.9b,3505,Bank
+12.2b,3427,Anonyme literarische Werke
+10.6b,3340,"Fremdenverkehr, Hotel- und Gaststättengewerbe"
+15.4p,3329,"Personen zu Rundfunk, Neuen Medien"
+13.1cy,3310,Geografische Namen als künstlerisches Motiv
+11.3a,3286,Lexikologie
+12.4y,3267,Geografische Namen als literarisches Motiv
+7.8a,3224,"Rechtspflege, Prozessrecht"
+8.1,3171,"Politik (Allgemeines), Politische Theorie"
+21.5p,3163,Personen zu Physik
+8.3,3105,Außenpolitik
+8.2a,3089,Innenpolitik
+16.1,3049,Geschichte (Allgemeines)
+10.1c,3044,Wirtschaftsgeschichte: Neuzeit
+9.4b,2958,"Mitbestimmung, Gewerkschaften"
+31.6,2878,Maschinenbau
+21.4,2786,"Elementarteilchen, Kern-, Atom-, Molekularphysik"
+15.4,2779,"Rundfunk, Neue Medien"
+9.3b,2761,"Bevölkerung, Sozialstruktur, Soziale Situation, Soziale Bewegungen"
+7.10a,2752,"Wirtschaftsrecht, Wirtschaftsaufsicht"
+31.8a,2752,Fertigungstechnik
+7.14,2749,"Internationales Recht (einschließlich Völkerrecht und Recht der Europäischen Gemeinschaften, Europäischen Union), Kollisionsrecht"
+10.11p,2722,Personen zu Betriebswirtschaftslehre
+6.8p,2714,"Personen zu Archiv, Museum"
+32.4,2705,"Gartenbau, Obstbau"
+5.5p,2678,Personen zu Psychologie
+22.5p,2653,Personen zu Chemie
+10.6p,2627,"Personen zu Telekommunikation und Verkehr, Fremdenverkehr"
+10.8b,2607,"Bauwirtschaft, Baubetrieb und Bodenmarkt"
+10.4,2512,Wirtschaftspolitik
+31.11,2478,Lebensmitteltechnologie
+13.3,2440,Malerei
+19.4p,2416,"Personen zu Geologie, Mineralogie, Historischer Geologie, Boden-, Gesteins- und Lagerstättenkunde, Paläontologie"
+31.1a,2371,Technik (Allgemeines)
+3.5cb,2367,"Mission, Kirchliche Sozialarbeit"
+32.6,2340,"Tierzucht, Tierhaltung"
+27.13,2305,"Neurologie, Psychiatrie"
+6.3b,2261,Berufsausbildung
+23.3,2220,Mikrobiologie
+19.4c,2199,"Mineralogie, Boden-, Gesteins- und Lagerstättenkunde"
+3.5,2177,Praktische Theologie
+7.3,2150,"Staatsrecht, Verfassungsrecht"
+31.9a,2076,"Elektrotechnik, Elektrische Energietechnik"
+19.1d,2068,Reise
+32.1a,2061,Landwirtschaft allgemein
+8.1p,2038,"Personen (Politologen, Staatstheoretiker)"
+7.11a,1998,"Arbeitsrecht, Sozialrecht, Recht der Tarifverträge"
+12.4p,1980,Personen als literarisches Motiv
+13.1cp,1971,Personen als künstlerisches Motiv
+31.16,1914,Militärtechnik
+27.21,1895,Tiermedizin
+21.3,1866,"Elektrizität, Magnetismus, Optik"
+10.9p,1863,"Personen zu Geld, Bank, Börse"
+7.1a,1859,"Recht allgemein, Rechtsphilosophie"
+10.1p,1819,Personen zu Wirtschaftsgeschichte (bis ca. 1900)
+7.5c,1816,"Baurecht, Raumordnung, Bodenrecht, Umweltrecht, Naturschutzrecht, Denkmalschutz"
+12.1a,1806,Allgemeine Literaturwissenschaft
+13.5,1804,Fotografie
+35,1789,"Spiel, Unterhaltung"
+31.2,1780,"Sanitärtechnik, Umwelttechnik"
+16.2,1774,Quellen und Historische Hilfswissenschaften
+31.4,1765,"Bergbau, Hüttentechnik"
+31.1c,1755,"Mess-, Steuerungs- und Regelungstechnik"
+10.11a,1745,"Betriebswirtschaftslehre (Allgemeines), Unternehmen, Management"
+10.10,1735,"Genossenschaft, Gemeinwirtschaft, Alternative Wirtschaft"
+3.6c,1729,Ostkirchen und andere christliche Religionsgemeinschaften und Sekten
+5.1b,1712,"Psychologische Diagnostik, Tests"
+5.7,1709,Esoterik
+10.12,1675,"Gewerbe allgemein, Industrie, Handwerk"
+14.2,1672,"Musikalische Form, Musikgattung"
+24.3p,1666,Personen zu Botanik
+31.12,1659,"Textiltechnik, Gummi- und Lederverarbeitung"
+18p,1650,"Personen zu Natur, Naturwissenschaften allgemein"
+32.2,1640,"Agrarpolitik, Agrarmarkt, Landwirtschaftliche Betriebslehre"
+10.3c,1639,Energie- und Wasserwirtschaft
+20,1544,"Astronomie, Weltraumforschung"
+12.3,1529,Literaturgattung
+25.3p,1523,Personen zu Zoologie
+19.2p,1520,"Personen zu Geodäsie, Kartografie"
+22.2,1507,Theoretische und Physikalische Chemie
+20p,1500,"Personen zu Astronomie, Weltraumforschung"
+6.1b,1487,Geistes- und Kulturgeschichte
+33.3p,1466,"Personen zu Hauswirtschaft, Körperpflege, Mode, Kleidung"
+23.4p,1463,"Personen zu allgemeiner Biologie, Mikrobiologie"
+7.5d,1422,"Kulturrecht, Presserecht, Rundfunkrecht, Bildungswesen und Forschung"
+31.1d,1399,"Werkstoffkunde, Werkstoffprüfung"
+32.8,1378,Forstwirtschaft
+29,1371,"Stochastik, Operations Research"
+19.4b,1370,Historische Geologie
+21.1,1345,"Physik (Allgemeines), Mathematische Physik"
+10.12a,1309,"Industrie, Industriebetrieb, Handwerk"
+21.5,1302,"Plasma, Gas, Flüssigkeit, Festkörper"
+7.2c,1297,"Rechtsgeschichte, Verfassungsgeschichte: Neuzeit"
+2.1p,1283,"Personen zu Schrift, Handschriftenkunde"
+00,1270,Unspezifische Allgemeinwörter
+27.10,1256,"Chirurgie, Orthopädie"
+14.3,1226,"Musikinstrumentenkunde, Musikinstrumentenbau"
+3.5bb,1215,"Katechetik, Christliche Erziehung, Kirchliche Bildungsarbeit"
+19.1c,1203,Anthropogeografie
+3.6,1198,Kirche und Konfession
+33.3,1172,"Mode, Kleidung"
+33.2,1163,"Kochen, Backen, Lebens- und Genussmittel, Küchengerät"
+31.1b,1158,"Technische Physik, Technische Mathematik"
+19.4a,1142,"Allgemeine Geologie, Geophysik"
+27.2,1129,Anatomie
+15.2p,1121,"Personen zu Kabarett, Zirkus, Varieté"
+10.13a,1110,"Handel allgemein, Dienstleistung allgemein"
+31.5,1099,"Energietechnik, Kerntechnik"
+7.7a,1097,Strafrecht
+30p,1095,"Personen zu Informatik, Datenverarbeitung"
+5.1a,1087,"Psychologie (Allgemeines), Experimentelle Psychologie"
+6.4,1073,Unterricht
+13.7,1048,Neue Formen der Kunst
+31.15,1046,"Glas, Keramik, Steine und Erden"
+13.1b,1045,Kunstgeschichte
+10.5,1041,"Finanzwirtschaft, Finanzpolitik"
+10.9c,1039,"Kapitalmarkt, Börse, Kapitalanlage"
+32.3,1039,Ackerbau
+5.2,1019,"Entwicklungspsychologie, Vergleichende Psychologie"
+9.5b,1005,Sozialversicherung und Gesetzliche Krankenversicherung
+10.11e,1003,"Marketing, Wettbewerb"
+21.2,1001,"Mechanik, Wärme, Akustik"
+27.1a,996,Medizin (Allgemeines)
+10.8a,989,"Öffentliche und private Bautätigkeit, Bau- und Bodenpolitik"
+5.7p,981,"Personen zu Parapsychologie, Esoterik"
+5.5,958,"Angewandte Psychologie, Psychohygiene"
+27.3d,957,"Haut, Knochen, Nerven, Muskeln, Sinnesorgane"
+34.2,948,Geschichte des Sports
+7.12b,944,Schuldrecht
+31.8b,923,Feinwerktechnik
+10.3b,914,"Öffentliche Wirtschaft, Abfallwirtschaft, Gesundheitsökonomie"
+19.2,883,"Geodäsie, Kartografie"
+10.7p,877,"Personen zu Umweltschutz, Raumordnung, Landschaftsgestaltung"
+9.5a,841,"Sozialpolitik, Entwicklungshilfe"
+10.11f,837,"Rechnungswesen, Steuer, Revision"
+1,831,"Allgemeines, Interdisziplinäre Allgemeinwörter"
+7.6a,824,"Polizeirecht, Ordnungsrecht"
+7.9b,819,"Steuerrecht, Zollrecht"
+3.3c,815,Kirchengeschichte: Neuzeit
+10.14,800,Versicherung
+27.4,791,"Allgemeine Pathologie, Onkologie, Experimentelle Medizin"
+11.2b,783,Grammatik
+22.3,779,Analytische Chemie und Untersuchungsmethoden
+23.1a,777,Biologie allgemein
+17.3,762,"Sachkultur, Volkskunst"
+3.3b,761,Kirchengeschichte: Mittelalter
+9.1c,748,Sozialgeschichte: Neuzeit
+9.2a,729,"Sozialwissenschaften allgemein, Soziologische Theorien"
+27.9a,726,"Hämatologie, Kardiologie"
+5.3,720,"Sozial-, Kultur- und Völkerpsychologie"
+19.5,718,"Meteorologie, Klimatologie, Hochatmosphäre, Magnetosphäre"
+32.5,715,Phytomedizin
+19.4d,709,Paläontologie
+24.2b,709,"Pflanzensoziologie, Pflanzenökologie, Pflanzengeografie"
+27.9c,706,"Gastroenterologie, Endokrinopathie"
+12.2a,702,Literaturgeschichte
+4.3,700,"Erkenntnistheorie, Logik"
+7.6b,684,Gesundheitsrecht
+10.9a,679,"Geldtheorie, Geldpolitik, Währung"
+25.2a,671,"Anatomie, Tierphysiologie"
+4.1,658,Philosophie (Allgemeines)
+7.2b,657,"Rechtsgeschichte, Verfassungsgeschichte: Mittelalter"
+3.2,646,Bibel
+7.7b,639,Strafvollzug
+27.7,637,Allgemeine Therapie
+27.3c,635,"Ernährung, Stoffwechsel, Inkretion"
+4.5,623,"Ethik, Philosophische Anthropologie, Sozialphilosophie"
+4.2,606,Philosophiegeschichte
+26p,587,Personen zu Anthropologie
+10.2a,584,"Wirtschaft, Volkswirtschaft (Allgemeines)"
+27.17,582,Zahnmedizin
+9.3d,577,"Sozialisation, Sozialverhalten"
+7.5b,573,Kommunalrecht
+31.13,564,Holzbearbeitung
+24.2a,549,"Pflanzenanatomie, Pflanzenphysiologie"
+3.3a,549,Kirchengeschichte: Antike
+16.4d,529,Geschichte überregionaler Gebiete: Zeitgeschichte
+27.11,524,"Gynäkologie, Geburtshilfe"
+10.11g,511,"Investition, Finanzierung"
+27.8b,508,Immunologie
+25.2b,501,"Tiersoziologie, Tierökologie, Tiergeografie, Verhaltensforschung"
+10.11h,499,"Personalpolitik, Arbeitsgestaltung"
+25.1,493,Zoologie (Allgemeines)
+10.11m,489,"Spezielle Informationssysteme, Programme"
+3.4b,485,Dogmatik
+3.3,475,Kirchengeschichte
+32.10,474,"Fischerei, Fischzucht"
+7.9a,472,Finanzrecht
+9.3e,469,"Kommunikation, Meinungsbildung"
+17.4,461,"Volksliteratur, Volksmusik"
+9.2b,456,"Methoden und Techniken der empirischen Sozialforschung, Statistik in den"
+10.8p,454,"Personen zu Bau, Boden"
+27.1b,451,Medizingeschichte
+23.1b,445,"Genetik, Evolution"
+11.2a,444,Allgemeine Sprachtheorie
+7.5e,444,"Straßen- und Wegerecht, Verkehrsrecht, Telekommunikationsrecht"
+24.1,435,Botanik (Allgemeines)
+10.2ac,433,"Mathematische Methoden, Information, Entscheidung"
+27.9e,428,"Knochen, Gelenke, Muskeln"
+10.11c,427,"Beschaffung, Produktion"
+15.2,421,"Kabarett, Zirkus, Varieté"
+27.9f,417,Infektionen
+10.11i,417,"Büro, Bürokommunikation"
+7.11b,416,Berufsrecht
+3.2b,414,Neues Testament
+27.12,413,Kinderheilkunde
+3.4a,411,"Systematische Theologie (Allgemeines), Fundamentaltheologie"
+7.5a,403,Dienstrecht (auch Richter)
+31.1e,402,Technikgeschichte
+10.2ea,402,"Außenwirtschaft, Außenhandel gesamtwirtschaftlich"
+3.2p,399,Personen der Bibel
+3.2a,388,Altes Testament
+32.9,388,Jagd
+33.1,387,"Hauswirtschaft, Körperpflege"
+3.4c,383,"Theologische Anthropologie, Christliche Ethik"
+10.5p,379,"Personen zu Finanzwirtschaft, Finanzpolitik"
+27.3b,378,"Blut, Kardiovaskuläres System, Atmungsorgan"
+10.11b,373,"Mathematische Methoden, Information, Entscheidung"
+32.7,373,Milchwirtschaft
+27.19,368,Sondergebiete der Medizin
+11.3b,365,Namenkunde
+10.3p,361,"Personen zu öffentlichen Aufgaben, Öffentlicher Wirtschaft, Energie- und Rohstoffwirtschaft"
+27.16,353,Augenheilkunde
+6.2b,352,Geschichte des Bildungswesens
+11.2c,349,"Phonetik, Phonologie"
+7.10b,349,"Gewerblicher Rechtsschutz, Urheberrecht"
+27.14,341,"Dermatologie, Venerologie"
+10.2b,337,"Haushalt, Verbraucher"
+10.2c,335,"Mikroökonomie, Wettbewerb"
+7.12d,333,Familienrecht
+32.1b,332,Landwirtschaftsgeschichte
+7.12c,327,Sachenrecht
+7.4,325,Allgemeines Verwaltungsrecht
+27.5,322,Allgemeine Diagnostik
+16.4c,319,Geschichte überregionaler Gebiete: Neuzeit
+22.1,304,Chemie (Allgemeines)
+27.9d,303,"Urologie, Nephrologie, Andrologie"
+7.6c,297,Kriminologie
+36,295,"Basteln, Handarbeiten, Heimwerken"
+7.15b,283,Geschichte der Öffentlichen Verwaltung
+27.15,282,Hals-Nasen-Ohren-Heilkunde
+4.4,282,Metaphysik
+19.5p,280,"Personen zu Meteorologie, Klimatologie, Hochatmosphäre, Magnetosphäre"
+27.6,278,"Medizinische Radiologie, Nuklearmedizin"
+7.12a,278,Allgemeiner Teil des Bürgerlichen Rechts
+3.5ca,278,Seelsorge
+5.4,266,Tiefenpsychologie
+7.12,265,Bürgerliches Recht
+10.3d,260,Rohstoffwirtschaft
+16.4b,253,Geschichte überregionaler Gebiete: Mittelalter
+10.1b,252,Wirtschaftsgeschichte: Mittelalter
+7.2a,250,"Rechtsgeschichte, Verfassungsgeschichte: Altertum"
+10.2aa,249,Volkswirtschaft
+10.2eb,247,"Außenwirtschaft, Außenhandel betrieblich"
+27.9b,244,Pulmonologie
+23.4,243,Untersuchungsmethoden (Biologie)
+10.15,223,"Werbewirtschaft, Öffentlichkeitsarbeit"
+27.3a,218,"Physiologie (Allgemeines), Physiologische Chemie"
+29p,216,"Personen zu Stochastik, Operations Research"
+10.15p,215,"Personen zu Werbewirtschaft, Öffentlichkeitsarbeit"
+10.4p,204,Personen zu Wirtschaftspolitik
+26,200,Anthropologie
+9.3a,194,"Soziales Leben, Bevölkerung (Allgemeines), Gesellschaft allgemein"
+11.3d,190,Anonymes Werk als Sprachdenkmal
+10.14p,178,Personen zu Versicherung
+16.4,176,Geschichte überregionaler Gebiete
+10.11d,175,Kosten
+10.2dc,170,Wirtschaftsstruktur
+11.1b,169,Historische Sprachwissenschaft
+10.2da,168,"Wirtschaftskreislauf, Konjunktur"
+7.12e,163,Erbrecht
+19.3p,155,"Personen zu Hydrologie, Meereskunde"
+35p,151,"Personen zu Spiel, Unterhaltung"
+10.2e,141,"Außenwirtschaft, Außenhandel"
+10.2ep,138,"Personen zu Außenwirtschaft, Außenhandel"
+3.5ba,132,Homiletik
+11.1c,122,Sprachliche Technik
+7.11c,121,Gebührenrecht
+4.7,117,Kulturphilosophie
+7.5f,116,Wehrrecht
+7.2,104,"Rechtsgeschichte, Verfassungsgeschichte"
+27.3e,101,Harn- und Geschlechtsorgane
+5.6,100,Parapsychologie
+10.1,98,Wirtschaftsgeschichte
+9.1,96,Sozialgeschichte
+10.2ab,90,Wirtschaftssystem
+10.3a,84,Öffentliche Aufgaben
+27.18,75,Sexualmedizin
+4.6,75,Ästhetik
+24.2,73,Allgemeine Botanik
+19,71,Geowissenschaften
+10.10p,71,"Personen zu Genossenschaft, Gemeinwirtschaft, Alternativer Wirtschaft"
+27.9,63,Innere Medizin
+25.2,58,Allgemeine Zoologie
+7.8b,53,Rechtsmedizin
+9.1b,52,Sozialgeschichte: Mittelalter
+9.1a,38,Sozialgeschichte: Altertum
+10.2db,34,Verteilung
+16.4a,34,Geschichte überregionaler Gebiete: Altertum
+36p,31,"Personen zu Basteln, Handarbeiten, Heimwerken"
+11.3c,23,Fachsprache
+10.1a,22,Wirtschaftsgeschichte: Altertum
+10.2d,21,"Konjunktur, Verteilung, Wirtschaftsstruktur"
+9.2,16,"Sozialwissenschaften allgemein, Soziologische Theorien, Statistik in den Sozialwissenschaften"
+7.1b,9,Rechtsvergleich
+6,1,
+0.0p,1,
+39p,1,

@@ -18,37 +18,48 @@ Die Auswertungen werde wie folgt erzeugt:
 ```bash
 $ make -j4 all
 $ tree -L 1 data/
-data/
-├── partitions
-├── pica
-├── tmp
-└── user
+stats/
+├── gnd_entity_count.csv
+├── gnd_entity_types.csv
+├── gnd_relation_count.csv
+├── gnd_systematik.csv
+├── title_gnd_links.csv
+├── title_gnd_links_unique.csv
+├── title_gnd_mean.csv
+├── title_gnd_mean_Tb.csv
+├── title_gnd_mean_Tf.csv
+├── title_gnd_mean_Tg.csv
+├── title_gnd_mean_Tp.csv
+├── title_gnd_mean_Ts.csv
+├── title_gnd_mean_Tu.csv
+├── title_gnd_top10.csv
+├── title_gnd_top10_Tb.csv
+├── title_gnd_top10_Tf.csv
+├── title_gnd_top10_Tg.csv
+├── title_gnd_top10_Tp.csv
+├── title_gnd_top10_Ts.csv
+└── title_gnd_top10_Tu.csv
 
-4 directories, 0 files
+0 directories, 20 files
 ```
 
 Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 
 ## Auswertungen
 
-## Allgemein
+### Allgemein
 
 * [gnd_entity_count.csv](stats/gnd_entity_count.csv) — Anzahl Entitäten in der GND
 * [gnd_entity_types.csv](stats/gnd_entity_types.csv) — Verteilung Entitätentypen
+* [gnd_releation_count.csv](stats/gnd_relation_count.csv) — Anzahl Relationen in der GND (Felder 028R, 029R, 030R, 022R, 041R, 065R)
+* [gnd_classification_all.csv](stats/gnd_classification_all.csv) — Verteilung der GND-Systematik (Feld 042A.a)
+* [gnd_classification_top10.csv](stats/gnd_classification_top10.csv) — Top10 GND-Systematik
 * [title_gnd_links.csv](stats/title_gnd_links.csv) — Anzahl GND-Verknüpfungen in DNB-Titeldaten
 * [title_gnd_links_unique.csv](stats/title_gnd_links_unique.csv) — Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
 * [title_gnd_top10.csv](stats/title_gnd_top10.csv) — Top10 GND-Entitäten in den DNB-Titeldaten
 * [title_gnd_mean.csv](stats/title_gnd_mean.csv) — Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
 
-## Entitätstypen
+### Nach Entitätstyp
 
 * [title_gnd_top10_T{bfgpsu}.csv](stats/title_gnd_top10_Tp.csv) — Top10 GND-Entitäten in den DNB-Titeldaten (pro Entitätstyp)
 * [title_gnd_mean_T{bfgpsu}.csv](stats/title_gnd_mean_Tp.csv) — Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz (pro Entitätstyp)
-
-
-## Alt
-
-| Datei                            | Bemerkung                                           |
-| -------------------------------- | --------------------------------------------------- |
-| `stats/gnd_systematik_top10.csv` | Top-10 GND-Systematik-Nummern                       |
-| `stats/gnd_rel_count.csv`        | Anzahl der Relationen innerhalb der GND             |

@@ -74,10 +74,14 @@ $(USERDIR)/0XXR.csv: $(USERDIR)/022R.csv $(USERDIR)/028R.csv $(USERDIR)/029R.csv
 # STATS
 #
 
-STATSOBJ := gnd_entity_types.csv gnd_entity_count.csv gnd_systematik.csv gnd_rel_count.csv
-stats: $(addprefix $(STATSDIR)/,$(STATSOBJ)) title-analysis | prepare
+STATSOBJ := gnd_entity_types.csv gnd_entity_count.csv gnd_systematik.csv
+STATSOBJ += gnd_relation_count.csv
+stats: $(addprefix $(STATSDIR)/,$(STATSOBJ)) title-analysis gnd-analysis | prepare
 
 $(STATSDIR)/gnd_entity_count.csv: $(USERDIR)/gnd.dat
+	wc -l $< | cut -d" " -f1 > $@
+
+$(STATSDIR)/gnd_relation_count.csv: $(USERDIR)/0XXR.csv
 	wc -l $< | cut -d" " -f1 > $@
 
 $(STATSDIR)/gnd_entity_types.csv: $(USERDIR)/gnd.dat
@@ -88,11 +92,10 @@ title-analysis: $(USERDIR)/041A_9.csv
 
 $(STATSDIR)/gnd_systematik.csv: $(USERDIR)/gnd.dat
 	$(PICA) frequency "042A.a" $< -o $@
-	$(SCRIPTS)/gnd_systematik.py $@
 
+gnd-analysis: $(STATSDIR)/gnd_systematik.csv
+	$(SCRIPTS)/gnd.py $<
 
-$(STATSDIR)/gnd_rel_count.csv: $(USERDIR)/0XXR.csv
-	wc -l $< | cut -d" " -f1 > $@
 
 #
 # ALL

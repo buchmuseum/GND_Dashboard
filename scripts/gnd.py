@@ -12,8 +12,10 @@ def main():
     )
 
     result = pd.merge(df, names, on="id", how="left")
+    result.to_csv("stats/gnd_classification_all.csv", index=False)
+
     result = result[["id", "name", "count"]][:10]
-    result.to_csv("stats/gnd_sys_top10.csv", index=False)
+    result.to_csv("stats/gnd_classification_top10.csv", index=False)
 
 
 if __name__ == "__main__":
