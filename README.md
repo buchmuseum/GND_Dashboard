@@ -5,6 +5,7 @@ Das Python Meetup der [DNB](https://dnb.de/) erstellt anlässlich der [GNDcon II
 ## Abhängigkeiten
 
 * [GNU Make](https://www.gnu.org/software/make/)
+* [Pandas](https://pandas.pydata.org/)
 * [pica-rs](https://github.com/deutsche-nationalbibliothek/pica-rs)
 
 ## Erzeugung der Daten
