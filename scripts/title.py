@@ -22,6 +22,15 @@ def top10(df: pd.DataFrame, bbg: Optional[str]) -> pd.DataFrame:
     return df_top10
 
 
+def mean(df: pd.DataFrame, bbg: Optional[str]) -> float:
+    if bbg:
+        df = df[df["bbg"].str.startswith(bbg)]
+
+    df_mean = df[["idn", "gnd_id"]].groupby(by="idn").count()
+
+    return df_mean["gnd_id"].mean()
+
+
 def main():
     df = pd.read_csv(sys.argv[1], low_memory=False)
     df = df[pd.notna(df["bbg"])]
@@ -41,6 +50,16 @@ def main():
     for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
         Tx_top10 = top10(df, bbg)
         Tx_top10[:10].to_csv(f"stats/{bbg}_top10.csv")
+
+    # Durchschnittliche Anzahl an Verknüpfungen pro DNB-Titel
+    with open("stats/gnd_mean.csv", "w") as f:
+        f.write(str(mean(df, None)))
+
+    for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
+        Tx_mean = mean(df, bbg)
+
+        with open(f"stats/{bbg}_mean.csv", "w") as f:
+            f.write(str(Tx_mean))
 
 
 if __name__ == "__main__":
