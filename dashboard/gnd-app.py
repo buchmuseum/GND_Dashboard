@@ -1,4 +1,6 @@
+from re import U
 from altair.vegalite.v4.schema.channels import Tooltip
+from numpy.core.fromnumeric import sort
 from pandas.io.parsers import read_csv
 import streamlit as st
 import pandas as pd
@@ -61,40 +63,72 @@ def ramon():
 def tb_stat():
     pass
 
-def stat_allgemein():
-    #Gesamt Entity Count
-    with open(f"{path}/../stats/gnd_entity_count.csv", "r") as f:
-        entities = f'{int(f.read()):,}'
-        st.write(f"GND-Entitäten gesamt: {entities.replace(',','.')}")
-    
+def stat_allgemein():   
     #Entities nach Typ
     df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
-    df['level'] = df.entity.str[2:]
+    df['level'] = df.entity.str[2:3]
     df.entity = df.entity.str[:2]
 
     entity_count = alt.Chart(df).mark_bar().encode(
         alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
         alt.Y('entity', title='Satzart'),
-        color='level',
+        alt.Color('level'),
         tooltip=['count']
     )
     st.header('Entitäten und Katalogisierungslevel')
     st.altair_chart(entity_count, use_container_width=True)
 
+    #Gesamt Entity Count
+    with open(f"{path}/../stats/gnd_entity_count.csv", "r") as f:
+        entities = f'{int(f.read()):,}'
+    st.write(f"GND-Entitäten gesamt: {entities.replace(',','.')}")
+
     #Relationen
+    rels = pd.read_csv(f'{path}/../stats/gnd_codes_all.csv', index_col=False)
+    st.header('Relationen')
+    rels_filt = st.slider('Zeige Top ...', 5, len(rels), 10, 1)    
+    relation_count = alt.Chart(rels.nlargest(rels_filt, 'count', keep='all')).mark_bar().encode(
+        alt.X('code', title='Relationierungs-Code', sort='-y'),
+        alt.Y('count', title='Anzahl'),
+        alt.Color('code', sort='-y'),
+        tooltip=['count'],
+    )
+    st.altair_chart(relation_count, use_container_width=True)
+    
     with open(f"{path}/../stats/gnd_relation_count.csv", "r") as f:
         relations = f'{int(f.read()):,}'
-        st.write(f"Relationen zwischen Entitäten gesamt: {relations.replace(',','.')}")
+    st.write(f"Relationen zwischen Entitäten gesamt: {relations.replace(',','.')}")
 
-    rels = pd.read_csv(f'{path}/../stats/gnd_codes_top10.csv', index_col=False)
-    relation_count = alt.Chart(rels).mark_bar().encode(
-        alt.X('code', title='Relationierungs-Code'),
+    #Systematik
+    classification = pd.read_csv(f'{path}/../stats/gnd_classification_all.csv', index_col=False)
+    st.header('Systematik')
+    class_filt = st.slider('Zeige Top ...', 5, len(classification), 10, 1)
+    classification_count = alt.Chart(classification.nlargest(class_filt, 'count', keep='all')).mark_bar().encode(
+        alt.X('id', title='Notation', sort='-y'),
         alt.Y('count', title='Anzahl'),
-        tooltip=['count'],
-        color='code'
+        alt.Color('id', sort='-y'),
+        tooltip=['count']
     )
-    st.header('Relationen')
-    st.altair_chart(relation_count, use_container_width=True)
+    st.altair_chart(classification_count, use_container_width=True)
+
+    #DNB-Titeldaten
+    
+    #Anzahl GND-Verknüpfungen in DNB-Titeldaten
+    st.header('GND in der Deutschen Nationalbibliothek')
+    with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
+        links = f'{int(f.read()):,}'
+    
+    #Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
+    with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
+        uniques = f'{int(f.read()):,}'
+    
+    #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
+    with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
+        mean = str(round(float(f.read()),2)).replace('.',',')
+    
+    st.write(f"{links.replace(',','.')} Verknüpfungen zu {uniques.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
+    
+
 
 
 st.title('GND-Dashboard')
