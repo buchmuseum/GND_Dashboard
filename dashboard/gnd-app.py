@@ -1,12 +1,10 @@
-from re import U
-from altair.vegalite.v4.schema.channels import Tooltip
-from numpy.core.fromnumeric import sort
-from pandas.io.parsers import read_csv
+from pkg_resources import load_entry_point
 import streamlit as st
 import pandas as pd
 import altair as alt
 import pydeck as pdk
 import os
+import glob
 
 path = os.path.dirname(__file__)
 
@@ -18,16 +16,17 @@ satzart = st.sidebar.selectbox(
 st.sidebar.info('Diese Widgets wurden von der Python Community in der Deutschen Nationalbibliothek geschrieben. Das sind die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann.')
 
 def ramon():
-    my_file = path+'/photo.png'
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
     df.drop(columns=['id'], inplace=True)
     
     st.header('Top 50 Wirkungsorte von GND-Personen')
-    st.markdown('Aus allen Personensätzen (Tp) (n = ??) wurden solche mit Angabe des Wirkungsortes extrahier (n = ??). Die 50 häufigsten Wirkungsorte sind in 20 Diagrammen visualisiert.')
+    st.markdown('Aus allen Personensätzen (Tp) (n = ??) wurden solche mit Angabe des Wirkungsortes extrahiert (n = ??). Die 50 häufigsten Wirkungsorte sind in 2 Diagrammen visualisiert.')
 
-    graph_count = alt.Chart(df).mark_bar().encode(x=alt.X('name:N', sort='y'), y='count', tooltip=['name', 'count'])
+    #Balkendiagramm
+    graph_count = alt.Chart(df).mark_bar().encode(alt.X('name:N', sort='y'), y='count', tooltip=['name', 'count'])
     st.altair_chart(graph_count, use_container_width=True)
 
+    #Karte
     INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=50.67877877706058,
     longitude=8.129981238464392,
@@ -111,28 +110,16 @@ def stat_allgemein():
     )
     st.altair_chart(classification_count, use_container_width=True)
 
-    #DNB-Titeldaten
-    
-    #Anzahl GND-Verknüpfungen in DNB-Titeldaten
-    st.header('GND in der Deutschen Nationalbibliothek')
-    with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
-        links = f'{int(f.read()):,}'
-    
-    #Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
-    with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
-        uniques = f'{int(f.read()):,}'
-    
-    #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
-    with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
-        mean = str(round(float(f.read()),2)).replace('.',',')
-    
-    st.write(f"{links.replace(',','.')} Verknüpfungen zu {uniques.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
-    
+def load_gnd_top_daten():
+    gnd_top_df = pd.DataFrame()
+    for file in glob.glob(f'{path}/../stats/title_gnd_top10_*.csv'):
+        gnd_top_df = gnd_top_df.append(pd.read_csv(file, index_col=None))
+    return gnd_top_df
 
-
-
+#main
 st.title('GND-Dashboard')
 st.info('Hier finden Sie einige statistische Auswertungen der Normdaten der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek. (Stand der Daten: Mai 2021. Wählen Sie links die Satzart, die Sie interessiert und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
+
 if satzart == 'alle':
     stat_allgemein()
 
@@ -145,3 +132,53 @@ elif satzart == 'Tb - Körperschaften':
 
 elif satzart == "Tg - Geografika":
     ramon()
+
+#TODO
+#Diagramm Anzahl Sätze je Satzart und Katalogisierungslevel
+
+st.header('GND in der Deutschen Nationalbibliothek')
+
+#top_diagram mit Satzartfilter
+if satzart == 'alle':
+    st.header(f'TOP 10 GND-Entitäten in DNB-Titeldaten')
+    top_daten = pd.read_csv(f'{path}/../stats/title_gnd_top10.csv', index_col=None)
+
+    gnd_top = alt.Chart(top_daten).mark_bar().encode(
+        alt.X('name', title='Entitäten', sort='-y'),
+        alt.Y('count', title='Anzahl'),
+        alt.Color('name', sort='-y'),
+        tooltip=['count'],
+    )
+
+else:
+    st.header(f'TOP 10 {satzart} in DNB-Titeldaten')
+    top_daten = load_gnd_top_daten()
+    gnd_top = alt.Chart(top_daten.loc[top_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
+        alt.X('name', title='Entitäten', sort='-y'),
+        alt.Y('count', title='Anzahl'),
+        alt.Color('name', sort='-y'),
+        tooltip=['count'],
+    )
+st.altair_chart(gnd_top, use_container_width=True)
+
+#Durchschnittliche Verknüpfungen pro Satzart
+
+if satzart == 'alle':
+    #Anzahl GND-Verknüpfungen in DNB-Titeldaten
+    
+    with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
+        links = f'{int(f.read()):,}'
+    
+    #Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
+    with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
+        uniques = f'{int(f.read()):,}'
+    
+    #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
+    with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
+        mean = str(round(float(f.read()),2)).replace('.',',')
+    
+    st.write(f"{links.replace(',','.')} Verknüpfungen zu {uniques.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
+else:
+    with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
+        mean = str(round(float(f.read()),2)).replace('.',',')
+    st.write(f'Durchschnittlich {mean} Verknüpfungen zu {satzart}-Sätzen pro DNB-Titeldatensatz')
