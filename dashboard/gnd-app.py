@@ -20,7 +20,7 @@ def ramon():
     df.rename(columns={'name': 'Name', 'count': 'Anzahl'}, inplace=True)
 
     st.header('Top 10 Wirkungsorte von GND-Personen')
-    st.markdown('Von allen Personensätzen (Tp) sind 782.682 mit Angabe zum Wirkungsort der jeweiligen Person versehen.')
+    st.markdown('Von allen Personensätzen (Tp) weisen 782.682 Angaben zum Wirkungsort der jeweiligen Person auf.')
 
     #Balkendiagramm
     graph_count = alt.Chart(df.tail(10)).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
