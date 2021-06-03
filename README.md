@@ -18,7 +18,7 @@ Die Auswertungen werde wie folgt erzeugt:
 
 ```bash
 $ make -j4 all
-$ tree -L 1 data/
+$ tree -L 1 stats/
 stats/
 ├── gnd_entity_count.csv
 ├── gnd_entity_types.csv
@@ -47,6 +47,14 @@ stats/
 Alle erzeugten Artefakte können mit `make clean` gelöscht werden.
 
 ## Auswertungen
+
+Die Auswertung der Verlinkungen der GND zu den DNB-Titeldaten basiert auf den
+PICA+-Fledern: `022A.9`, `028A.9`, `028C.9`, `029A.9`, `029F.9`, `032X.9`,
+`033A.9`, `033E.9`, `033D.9`, `033H.9`, `039B.9`, `039C.9`, `039D.9`, `039E.9`,
+`039S.9`, `039V.9`, `039W.9`, `039X.9`, `039Z.9`, `039H.9`, `039I.9`, `039T.9`,
+`039U.9`, `039Y.9`, `041A.9`, `044G.9` sowie `044P.9`. Verknüpfungen aus den
+Feldern `044H.9` (automatisch vergeben) und `044K.9` gehen nicht mit in die
+Gesamtmenge ein.
 
 ### Allgemein
 

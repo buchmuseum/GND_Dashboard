@@ -22,18 +22,24 @@ def top10(df: pd.DataFrame, bbg: Optional[str]) -> pd.DataFrame:
     return df_top10
 
 
-def mean(df: pd.DataFrame, bbg: Optional[str]) -> float:
+def mean(df: pd.DataFrame, title_count: int, bbg: Optional[str]) -> float:
     if bbg:
         df = df[df["bbg"].str.startswith(bbg)]
 
-    df_mean = df[["idn", "gnd_id"]].groupby(by="idn").count()
+    return len(df) / title_count
 
-    return df_mean["gnd_id"].mean()
+    # df_mean = df[["idn", "gnd_id"]].groupby(by="idn").count()
+    # return df_mean["gnd_id"].mean()
 
 
 def main():
-    df = pd.read_csv(sys.argv[1], low_memory=False)
-    df = df[pd.notna(df["bbg"])]
+    title_count = 0
+    with open("stats/title_count.csv", "r") as f:
+        title_count = int(f.read())
+
+    df = pd.read_csv("data/user/0XXX_9.csv", low_memory=False)
+    df = df[pd.notna(df["bbg"]) & df["bbg"].str.startswith("T")]
+    df = df.drop_duplicates(["idn", "gnd_id"], keep="last")
 
     # Anzahl der Verknüpfungen von DNB-Titeln und GND-Entitäten.
     with open("stats/title_gnd_links.csv", "w") as f:
@@ -53,10 +59,10 @@ def main():
 
     # Durchschnittliche Anzahl an Verknüpfungen pro DNB-Titel
     with open("stats/title_gnd_mean.csv", "w") as f:
-        f.write(str(mean(df, None)))
+        f.write(str(mean(df, title_count, None)))
 
     for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
-        Tx_mean = mean(df, bbg)
+        Tx_mean = mean(df, title_count, bbg)
 
         with open(f"stats/title_gnd_mean_{bbg}.csv", "w") as f:
             f.write(str(Tx_mean))
