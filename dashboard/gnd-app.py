@@ -19,11 +19,12 @@ def ramon():
     df.drop(columns=['id'], inplace=True)
     df.rename(columns={'name': 'Name', 'count': 'Anzahl'}, inplace=True)
 
-    st.header('Top 10 Wirkungsorte von GND-Personen')
+    st.header('TOP 10 Wirkungsorte von GND-Personen')
     st.markdown('Von allen Personensätzen (Tp) weisen 782.682 Angaben zum Wirkungsort der jeweiligen Person auf.')
 
     #Balkendiagramm
-    graph_count = alt.Chart(df.tail(10)).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
+    orte_filt = st.slider('Zeige Top ...', min_value=3, max_value=len(df), value=10, step=1)
+    graph_count = alt.Chart(df.nlargest(orte_filt, 'Anzahl', keep='all')).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
     st.altair_chart(graph_count, use_container_width=True)
 
     #Karte
@@ -39,7 +40,7 @@ def ramon():
     "ScatterplotLayer",
     df,
     pickable=True,
-    opacity=0.8,
+    opacity=0.5,
     stroked=True,
     filled=True,
     radius_min_pixels=1,
@@ -54,9 +55,9 @@ def ramon():
     st.pydeck_chart(pdk.Deck(
     scatterplotlayer,
     initial_view_state=INITIAL_VIEW_STATE,
-    map_provider="mapbox",
+    #map_provider="mapbox",
     map_style=pdk.map_styles.LIGHT,
-    api_keys={'mapbox':'pk.eyJ1IjoiYXduZGxyIiwiYSI6ImNrbWt0OWtxOTE0ZW4ycHFvOGNjb2FwcXgifQ.lv0Ikqq0rIYB6wgkMzrx6Q'},
+    #api_keys={'mapbox':'pk.eyJ1IjoiYXduZGxyIiwiYSI6ImNrbWt0OWtxOTE0ZW4ycHFvOGNjb2FwcXgifQ.lv0Ikqq0rIYB6wgkMzrx6Q'},
     tooltip={"html": "<b>{Name}</b><br \>Wirkungsort von {Anzahl} Personen"}))
 
 def tb_stat():
