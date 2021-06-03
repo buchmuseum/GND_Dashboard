@@ -61,7 +61,7 @@ TITLE_LINK_OBJS += 044P_9.csv # Gestaltungsmerkmale auf bibliografischer Ebene
 # TODO 044H_9.csv (automatisch vergeben), 044K_9.csv (aus Fremddaten)
 
 GND_LINK_OBJS := 022R.csv 028R.csv 029R.csv 030R.csv 041R.csv 065R.csv
-USEROBJ := T.dat titel.dat gnd.dat 0XXR.csv 0XXX_9.csv
+USEROBJ := T.dat titel.dat gnd.dat 0XXR.csv 0XXX_9.csv 044H_9.csv 044K_9.csv
 
 user: $(addprefix $(USERDIR)/,$(USEROBJ)) | prepare
 
