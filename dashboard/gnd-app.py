@@ -23,7 +23,7 @@ def ramon():
     st.markdown('Von allen Personensätzen (Tp) sind 782.682 mit Angabe zum Wirkungsort der jeweiligen Person versehen.')
 
     #Balkendiagramm
-    graph_count = alt.Chart(df).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'])
+    graph_count = alt.Chart(df).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
     st.altair_chart(graph_count, use_container_width=True)
 
     #Karte
