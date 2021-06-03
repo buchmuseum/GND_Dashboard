@@ -18,12 +18,13 @@ st.sidebar.info('Diese Widgets wurden von der Python Community in der Deutschen 
 def ramon():
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
     df.drop(columns=['id'], inplace=True)
-    
+    df.rename(columns={'name': 'Name', 'count': 'Anzahl'}, inplace=True)
+
     st.header('Top 50 Wirkungsorte von GND-Personen')
-    st.markdown('Aus allen Personensätzen (Tp) (n = ??) wurden solche mit Angabe des Wirkungsortes extrahiert (n = ??). Die 50 häufigsten Wirkungsorte sind in 2 Diagrammen visualisiert.')
+    st.markdown('Von allen Personensätzen (Tp) sind 782.682 mit Angabe zum Wirkungsort der jeweiligen Person versehen.)
 
     #Balkendiagramm
-    graph_count = alt.Chart(df).mark_bar().encode(alt.X('name:N', sort='y'), y='count', tooltip=['name', 'count'])
+    graph_count = alt.Chart(df).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'])
     st.altair_chart(graph_count, use_container_width=True)
 
     #Karte
@@ -46,7 +47,7 @@ def ramon():
     radius_max_pixels=100,
     line_width_min_pixels=1,
     get_position='[lon, lat]',
-    get_radius="count",
+    get_radius="Anzahl",
     get_fill_color=[255, 140, 0],
     get_line_color=[0, 0, 0],
 )
@@ -57,12 +58,12 @@ def ramon():
     map_provider="mapbox",
     map_style=pdk.map_styles.LIGHT,
     api_keys={'mapbox':'pk.eyJ1IjoiYXduZGxyIiwiYSI6ImNrbWt0OWtxOTE0ZW4ycHFvOGNjb2FwcXgifQ.lv0Ikqq0rIYB6wgkMzrx6Q'},
-    tooltip={"html": "<b>{name}</b><br \>Wirkungsort von {count} Personen"}))
+    tooltip={"html": "<b>{Name}</b><br \>Wirkungsort von {Anzahl} Personen"}))
 
 def tb_stat():
     pass
 
-def stat_allgemein():   
+def stat_allgemein():
     #Entities nach Typ
     df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
     df['level'] = df.entity.str[2:3]
@@ -85,7 +86,7 @@ def stat_allgemein():
     #Relationen
     rels = pd.read_csv(f'{path}/../stats/gnd_codes_all.csv', index_col=False)
     st.header('Relationen')
-    rels_filt = st.slider('Zeige Top ...', 5, len(rels), 10, 1)    
+    rels_filt = st.slider('Zeige Top ...', 5, len(rels), 10, 1)
     relation_count = alt.Chart(rels.nlargest(rels_filt, 'count', keep='all')).mark_bar().encode(
         alt.X('code', title='Relationierungs-Code', sort='-y'),
         alt.Y('count', title='Anzahl'),
@@ -93,7 +94,7 @@ def stat_allgemein():
         tooltip=['count'],
     )
     st.altair_chart(relation_count, use_container_width=True)
-    
+
     with open(f"{path}/../stats/gnd_relation_count.csv", "r") as f:
         relations = f'{int(f.read()):,}'
     st.write(f"Relationen zwischen Entitäten gesamt: {relations.replace(',','.')}")
@@ -118,14 +119,14 @@ def load_gnd_top_daten():
 
 #main
 st.title('GND-Dashboard')
-st.info('Hier finden Sie einige statistische Auswertungen der Normdaten der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek. (Stand der Daten: Mai 2021. Wählen Sie links die Satzart, die Sie interessiert und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
+st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
 
 if satzart == 'alle':
     stat_allgemein()
 
 elif satzart == "Tp - Personen":
     #hier werden dann alle widgets als einzelne funktionen aufgerufen, die zur jeweiligen Kategorie gehören sollen
-    
+
     ramon()
 elif satzart == 'Tb - Körperschaften':
     tb_stat()
@@ -165,18 +166,18 @@ st.altair_chart(gnd_top, use_container_width=True)
 
 if satzart == 'alle':
     #Anzahl GND-Verknüpfungen in DNB-Titeldaten
-    
+
     with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
         links = f'{int(f.read()):,}'
-    
+
     #Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
     with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
         uniques = f'{int(f.read()):,}'
-    
+
     #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
     with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
         mean = str(round(float(f.read()),2)).replace('.',',')
-    
+
     st.write(f"{links.replace(',','.')} Verknüpfungen zu {uniques.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
 else:
     with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
