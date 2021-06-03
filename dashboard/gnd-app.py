@@ -1,4 +1,3 @@
-from pkg_resources import load_entry_point
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -63,21 +62,7 @@ def ramon():
 def tb_stat():
     pass
 
-def stat_allgemein():
-    #Entities nach Typ
-    df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
-    df['level'] = df.entity.str[2:3]
-    df.entity = df.entity.str[:2]
-
-    entity_count = alt.Chart(df).mark_bar().encode(
-        alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
-        alt.Y('entity', title='Satzart'),
-        alt.Color('level'),
-        tooltip=['count']
-    )
-    st.header('Entitäten und Katalogisierungslevel')
-    st.altair_chart(entity_count, use_container_width=True)
-
+def stat_allgemein():   
     #Gesamt Entity Count
     with open(f"{path}/../stats/gnd_entity_count.csv", "r") as f:
         entities = f'{int(f.read()):,}'
@@ -120,6 +105,33 @@ def load_gnd_top_daten():
 #main
 st.title('GND-Dashboard')
 st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
+
+#Entities nach Typ
+df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
+df['level'] = df.entity.str[2:3]
+df.entity = df.entity.str[:2]
+
+if satzart == 'alle':
+
+    entity_count = alt.Chart(df).mark_bar().encode(
+        alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
+        alt.Y('entity', title='Satzart'),
+        alt.Color('level'),
+        tooltip=['count']
+    )
+    st.header('Entitäten und Katalogisierungslevel')
+
+else:
+
+    entity_count = alt.Chart(df.loc[df['entity'].str.startswith(satzart[:2])]).mark_bar().encode(
+        alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
+        alt.Y('entity', title='Satzart'),
+        alt.Color('level'),
+        tooltip=['count']
+    )
+    st.header(f'Katalogisierungslevel in Satzart {satzart}')
+st.altair_chart(entity_count, use_container_width=True)
+
 
 if satzart == 'alle':
     stat_allgemein()
