@@ -19,11 +19,11 @@ def ramon():
     df.drop(columns=['id'], inplace=True)
     df.rename(columns={'name': 'Name', 'count': 'Anzahl'}, inplace=True)
 
-    st.header('Top 50 Wirkungsorte von GND-Personen')
+    st.header('Top 10 Wirkungsorte von GND-Personen')
     st.markdown('Von allen Personensätzen (Tp) sind 782.682 mit Angabe zum Wirkungsort der jeweiligen Person versehen.')
 
     #Balkendiagramm
-    graph_count = alt.Chart(df).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
+    graph_count = alt.Chart(df.tail(10)).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
     st.altair_chart(graph_count, use_container_width=True)
 
     #Karte
