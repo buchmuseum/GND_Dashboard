@@ -62,7 +62,7 @@ def wirkungsorte_musik():
     musiker_orte = pd.read_csv(f'{path}/musiker_orte.csv', sep='\t', index_col='idn')
     st.header('Wirkungszentren der Musik 1400-2010')
     st.write('Eine Auswertung der veröffentlichten Titel von Musikern und deren Wirkungszeiten erlaubt Rückschlüsse auf die musikalischen Zentren, wie sie im Bestand der DNB repräsentiert sind.')
-    limiter = st.slider('Jahresfilter', min_value=1400, max_value=musiker_orte['jahrzehnt'].max(), value=(1900), step=10)
+    limiter = st.slider('Jahresfilter', min_value=1400, max_value=int(musiker_orte['jahrzehnt'].max()), value=(1900), step=10)
     musik_filt= musiker_orte.loc[(musiker_orte['jahrzehnt'] == limiter)]
     musik_filt['norm']=(musik_filt['count']-musik_filt['count'].min())/(musik_filt['count'].max()-musik_filt['count'].min())
     #Karte
