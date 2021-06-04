@@ -59,7 +59,7 @@ def ramon():
     tooltip={"html": "<b>{Name}</b><br \>Wirkungsort von {Anzahl} Personen"}))
 
 def wirkungsorte_musik():
-    musiker_orte = pd.read_csv('musiker_orte.csv', sep='\t', index_col='idn')
+    musiker_orte = pd.read_csv(f'{path}/musiker_orte.csv', sep='\t', index_col='idn')
     st.header('Wirkungszentren der Musik 1400-2010')
     st.write('Eine Auswertung der veröffentlichten Titel von Musikern und deren Wirkungszeiten erlaubt Rückschlüsse auf die musikalischen Zentren, wie sie im Bestand der DNB repräsentiert sind.')
     limiter = st.slider('Jahresfilter', min_value=1400, max_value=musiker_orte['jahrzehnt'].max(), value=(1900), step=10)
