@@ -1,0 +1,411 @@
+00,Unspezifische Allgemeinwörter
+00m,Maschinell eingespielte Datensätze (Platzhalter)
+00p,Sachlich nicht klassifizierbare Personen
+1,Allgemeines, Interdisziplinäre Allgemeinwörter
+2.1,Schrift, Handschriftenkunde
+2.1p,Personen zu Schrift, Handschriftenkunde
+2.2,Buchwissenschaft, Buchhandel
+2.2p,Personen zu Buchwissenschaft, Buchhandel
+2.3,Presse
+2.3p,Personen zu Presse
+3.1,Allgemeine und vergleichende Religionswissenschaft, Nichtchristliche Religionen
+3.1p,Personen zu allgemeiner und vergleichender Religionswissenschaft, Personen zu
+3.2,Bibel
+3.2a,Altes Testament
+3.2aa,Teile des Alten Testamentes
+3.2b,Neues Testament
+3.2ba,Teile des Neuen Testamentes
+3.2p,Personen der Bibel
+3.3,Kirchengeschichte
+3.3a,Kirchengeschichte: Antike
+3.3b,Kirchengeschichte: Mittelalter
+3.3c,Kirchengeschichte: Neuzeit
+3.4a,Systematische Theologie (Allgemeines), Fundamentaltheologie
+3.4b,Dogmatik
+3.4c,Theologische Anthropologie, Christliche Ethik
+3.5,Praktische Theologie
+3.5a,Liturgik, Frömmigkeit
+3.5ba,Homiletik
+3.5bb,Katechetik, Christliche Erziehung, Kirchliche Bildungsarbeit
+3.5ca,Seelsorge
+3.5cb,Mission, Kirchliche Sozialarbeit
+3.6,Kirche und Konfession
+3.6a,Katholische Kirche
+3.6b,Evangelische Kirchen
+3.6c,Ostkirchen und andere christliche Religionsgemeinschaften und Sekten
+3.6p,Personen zu Kirchengeschichte, Systematischer und Praktischer Theologie, Kirche und Konfession
+4.1,Philosophie (Allgemeines)
+4.2,Philosophiegeschichte
+4.3,Erkenntnistheorie, Logik
+4.4,Metaphysik
+4.5,Ethik, Philosophische Anthropologie, Sozialphilosophie
+4.6,Ästhetik
+4.7,Kulturphilosophie
+4.7p,Personen zu Philosophie
+5.1a,Psychologie (Allgemeines), Experimentelle Psychologie
+5.1b,Psychologische Diagnostik, Tests
+5.2,Entwicklungspsychologie, Vergleichende Psychologie
+5.3,Sozial-, Kultur- und Völkerpsychologie
+5.4,Tiefenpsychologie
+5.5,Angewandte Psychologie, Psychohygiene
+5.5p,Personen zu Psychologie
+5.6,Parapsychologie
+5.7,Esoterik
+5.7p,Personen zu Parapsychologie, Esoterik
+6.1a,Kultur, Künste allgemein
+6.1b,Geistes- und Kulturgeschichte
+6.1p,Personen zu Kultur und Künsten, Geistes- und Kulturgeschichte
+6.2a,Bildungswesen (Allgemeines)
+6.2b,Geschichte des Bildungswesens
+6.3a,Schule
+6.3b,Berufsausbildung
+6.4,Unterricht
+6.4p,Personen zu Bildungswesen
+6.5,Wissenschaft
+6.6,Hochschule
+6.7,Bibliothek, Information und Dokumentation
+6.7p,Personen zu Bibliothek, Information und Dokumentation
+6.8,Archiv, Museum
+6.8p,Personen zu Archiv, Museum
+7.1a,Recht allgemein, Rechtsphilosophie
+7.1b,Rechtsvergleich
+7.2,Rechtsgeschichte, Verfassungsgeschichte
+7.2a,Rechtsgeschichte, Verfassungsgeschichte: Altertum
+7.2b,Rechtsgeschichte, Verfassungsgeschichte: Mittelalter
+7.2c,Rechtsgeschichte, Verfassungsgeschichte: Neuzeit
+7.3,Staatsrecht, Verfassungsrecht
+7.4,Allgemeines Verwaltungsrecht
+7.5a,Dienstrecht (auch Richter)
+7.5b,Kommunalrecht
+7.5c,Baurecht, Raumordnung, Bodenrecht, Umweltrecht, Naturschutzrecht, Denkmalschutz
+7.5d,Kulturrecht, Presserecht, Rundfunkrecht, Bildungswesen und Forschung
+7.5e,Straßen- und Wegerecht, Verkehrsrecht, Telekommunikationsrecht
+7.5f,Wehrrecht
+7.6a,Polizeirecht, Ordnungsrecht
+7.6b,Gesundheitsrecht
+7.6c,Kriminologie
+7.7a,Strafrecht
+7.7b,Strafvollzug
+7.8a,Rechtspflege, Prozessrecht
+7.8b,Rechtsmedizin
+7.9a,Finanzrecht
+7.9b,Steuerrecht, Zollrecht
+7.10a,Wirtschaftsrecht, Wirtschaftsaufsicht
+7.10b,Gewerblicher Rechtsschutz, Urheberrecht
+7.11a,Arbeitsrecht, Sozialrecht, Recht der Tarifverträge
+7.11b,Berufsrecht
+7.11c,Gebührenrecht
+7.12,Bürgerliches Recht
+7.12a,Allgemeiner Teil des Bürgerlichen Rechts
+7.12b,Schuldrecht
+7.12c,Sachenrecht
+7.12d,Familienrecht
+7.12e,Erbrecht
+7.13,Religionsrecht, Kirchenrecht, Staatskirchenrecht
+7.14,Internationales Recht (einschließlich Völkerrecht und Recht der Europäischen Gemeinschaften, Europäischen Union), Kollisionsrecht
+7.14p,Personen zu Recht
+7.15a,Öffentliche Verwaltung, Öffentlicher Dienst
+7.15b,Geschichte der Öffentlichen Verwaltung
+7.15p,Personen zu öffentlicher Verwaltung
+8.1,Politik (Allgemeines), Politische Theorie
+8.1p,Personen (Politologen, Staatstheoretiker)
+8.2a,Innenpolitik
+8.2b,Parteien, Politische Organisationen
+8.3,Außenpolitik
+8.4,Militär
+8.4p,Personen zu politischer Theorie, Militär
+9.1,Sozialgeschichte
+9.1a,Sozialgeschichte: Altertum
+9.1b,Sozialgeschichte: Mittelalter
+9.1c,Sozialgeschichte: Neuzeit
+9.2,Sozialwissenschaften allgemein, Soziologische Theorien, Statistik in den Sozialwissenschaften
+9.2a,Sozialwissenschaften allgemein, Soziologische Theorien
+9.2b,Methoden und Techniken der empirischen Sozialforschung, Statistik in den
+9.3a,Soziales Leben, Bevölkerung (Allgemeines), Gesellschaft allgemein
+9.3b,Bevölkerung, Sozialstruktur, Soziale Situation, Soziale Bewegungen
+9.3c,Gruppe, Organisationssoziologie, Interaktion
+9.3d,Sozialisation, Sozialverhalten
+9.3e,Kommunikation, Meinungsbildung
+9.4a,Arbeit
+9.4ab,Einzelne Berufe, Tätigkeiten, Funktionen; Religionszugehörigkeit, Weltanschauung
+9.4b,Mitbestimmung, Gewerkschaften
+9.5a,Sozialpolitik, Entwicklungshilfe
+9.5b,Sozialversicherung und Gesetzliche Krankenversicherung
+9.5c,Sozialarbeit, Sozialhilfe
+9.5p,Personen zu Soziologie, Gesellschaft, Arbeit, Sozialgeschichte
+10.1,Wirtschaftsgeschichte
+10.1a,Wirtschaftsgeschichte: Altertum
+10.1b,Wirtschaftsgeschichte: Mittelalter
+10.1c,Wirtschaftsgeschichte: Neuzeit
+10.1p,Personen zu Wirtschaftsgeschichte (bis ca. 1900)
+10.2a,Wirtschaft, Volkswirtschaft (Allgemeines)
+10.2aa,Volkswirtschaft
+10.2ab,Wirtschaftssystem
+10.2ac,Mathematische Methoden, Information, Entscheidung
+10.2b,Haushalt, Verbraucher
+10.2c,Mikroökonomie, Wettbewerb
+10.2d,Konjunktur, Verteilung, Wirtschaftsstruktur
+10.2da,Wirtschaftskreislauf, Konjunktur
+10.2db,Verteilung
+10.2dc,Wirtschaftsstruktur
+10.2dp,Personen zu Wirtschaftswissenschaften
+10.2e,Außenwirtschaft, Außenhandel
+10.2ea,Außenwirtschaft, Außenhandel gesamtwirtschaftlich
+10.2eb,Außenwirtschaft, Außenhandel betrieblich
+10.2ep,Personen zu Außenwirtschaft, Außenhandel
+10.3a,Öffentliche Aufgaben
+10.3b,Öffentliche Wirtschaft, Abfallwirtschaft, Gesundheitsökonomie
+10.3c,Energie- und Wasserwirtschaft
+10.3d,Rohstoffwirtschaft
+10.3p,Personen zu öffentlichen Aufgaben, Öffentlicher Wirtschaft, Energie- und Rohstoffwirtschaft
+10.4,Wirtschaftspolitik
+10.4p,Personen zu Wirtschaftspolitik
+10.5,Finanzwirtschaft, Finanzpolitik
+10.5p,Personen zu Finanzwirtschaft, Finanzpolitik
+10.6a,Telekommunikation und Verkehr
+10.6b,Fremdenverkehr, Hotel- und Gaststättengewerbe
+10.6p,Personen zu Telekommunikation und Verkehr, Fremdenverkehr
+10.7a,Umweltschutz, Umweltbelastung
+10.7b,Raumordnung, Stadtplanung, Landschaftsgestaltung
+10.7p,Personen zu Umweltschutz, Raumordnung, Landschaftsgestaltung
+10.8a,Öffentliche und private Bautätigkeit, Bau- und Bodenpolitik
+10.8b,Bauwirtschaft, Baubetrieb und Bodenmarkt
+10.8p,Personen zu Bau, Boden
+10.9a,Geldtheorie, Geldpolitik, Währung
+10.9b,Bank
+10.9c,Kapitalmarkt, Börse, Kapitalanlage
+10.9p,Personen zu Geld, Bank, Börse
+10.10,Genossenschaft, Gemeinwirtschaft, Alternative Wirtschaft
+10.10p,Personen zu Genossenschaft, Gemeinwirtschaft, Alternativer Wirtschaft
+10.11a,Betriebswirtschaftslehre (Allgemeines), Unternehmen, Management
+10.11b,Mathematische Methoden, Information, Entscheidung
+10.11c,Beschaffung, Produktion
+10.11d,Kosten
+10.11e,Marketing, Wettbewerb
+10.11f,Rechnungswesen, Steuer, Revision
+10.11g,Investition, Finanzierung
+10.11h,Personalpolitik, Arbeitsgestaltung
+10.11i,Büro, Bürokommunikation
+10.11m,Spezielle Informationssysteme, Programme
+10.11p,Personen zu Betriebswirtschaftslehre
+10.12,Gewerbe allgemein, Industrie, Handwerk
+10.12a,Industrie, Industriebetrieb, Handwerk
+10.12b,Einzelne Branchen der Industrie und des Handwerks
+10.12p,Personen zu Gewerbe allgemein, Industrie, Handwerk
+10.13a,Handel allgemein, Dienstleistung allgemein
+10.13b,Handel einzelner Branchen, Dienstleistung einzelner Branchen
+10.13p,Personen zu Handel, Dienstleistung
+10.14,Versicherung
+10.14p,Personen zu Versicherung
+10.15,Werbewirtschaft, Öffentlichkeitsarbeit
+10.15p,Personen zu Werbewirtschaft, Öffentlichkeitsarbeit
+11.1a,Sprache (Allgemeines)
+11.1b,Historische Sprachwissenschaft
+11.1c,Sprachliche Technik
+11.2a,Allgemeine Sprachtheorie
+11.2b,Grammatik
+11.2c,Phonetik, Phonologie
+11.2p,Personen zu Sprache
+11.3a,Lexikologie
+11.3b,Namenkunde
+11.3c,Fachsprache
+11.3d,Anonymes Werk als Sprachdenkmal
+12.1a,Allgemeine Literaturwissenschaft
+12.1b,Literarisches Leben
+12.1p,Personen zu Literaturwissenschaft (Literaturwissenschaftler)
+12.2a,Literaturgeschichte
+12.2b,Anonyme literarische Werke
+12.2p,Personen zu Literaturgeschichte (Schriftsteller)
+12.3,Literaturgattung
+12.4,Literarische Motive, Stoffe, Gestalten
+12.4p,Personen als literarisches Motiv
+12.4y,Geografische Namen als literarisches Motiv
+13.1a,Bildende Kunst
+13.1b,Kunstgeschichte
+13.1c,Sachliche Motive in der Kunst
+13.1cp,Personen als künstlerisches Motiv
+13.1cy,Geografische Namen als künstlerisches Motiv
+13.2,Plastik
+13.2p,Personen zu Plastik
+13.3,Malerei
+13.4,Zeichnung, Grafik
+13.4p,Personen zu Malerei, Zeichnung, Grafik
+13.5,Fotografie
+13.5p,Personen zu Fotografie
+13.6,Kunsthandwerk
+13.6p,Personen zu Kunsthandwerk
+13.7,Neue Formen der Kunst
+13.7p,Personen zu neuen Formen der Kunst
+14.1,Musik (Allgemeines), Musikgeschichte
+14.2,Musikalische Form, Musikgattung
+14.3,Musikinstrumentenkunde, Musikinstrumentenbau
+14.4,Systematische und Angewandte Musikwissenschaft
+14.4p,Personen zu Musik
+15.1,Theater, Tanz
+15.1p,Personen zu Theater, Tanz
+15.2,Kabarett, Zirkus, Varieté
+15.2p,Personen zu Kabarett, Zirkus, Varieté
+15.3,Film
+15.3p,Personen zu Film
+15.4,Rundfunk, Neue Medien
+15.4p,Personen zu Rundfunk, Neuen Medien
+16.1,Geschichte (Allgemeines)
+16.1p,Personen der Geschichtswissenschaft (Historiker, Archäologen)
+16.2,Quellen und Historische Hilfswissenschaften
+16.3,Archäologie, Vor- und Frühgeschichte
+16.4,Geschichte überregionaler Gebiete
+16.4a,Geschichte überregionaler Gebiete: Altertum
+16.4b,Geschichte überregionaler Gebiete: Mittelalter
+16.4c,Geschichte überregionaler Gebiete: Neuzeit
+16.4d,Geschichte überregionaler Gebiete: Zeitgeschichte
+16.5,Geschichte einzelner Länder und Völker
+16.5p,Personen der Geschichte (Politiker und historische Persönlichkeiten)
+17.1,Volkskunde, Völkerkunde (Allgemeines)
+17.2,Brauchtum, Volksglaube
+17.3,Sachkultur, Volkskunst
+17.4,Volksliteratur, Volksmusik
+17.4p,Personen zu Volkskunde, Völkerkunde
+18,Natur, Naturwissenschaften allgemein
+18p,Personen zu Natur, Naturwissenschaften allgemein
+19,Geowissenschaften
+19.1a,Geografie, Heimat- und Länderkunde (Allgemeines)
+19.1b,Physische Geografie
+19.1c,Anthropogeografie
+19.1d,Reise
+19.1dp,Personen zu Geografie, Heimat- und Länderkunde
+19.2,Geodäsie, Kartografie
+19.2p,Personen zu Geodäsie, Kartografie
+19.3,Hydrologie, Meereskunde
+19.3p,Personen zu Hydrologie, Meereskunde
+19.4a,Allgemeine Geologie, Geophysik
+19.4b,Historische Geologie
+19.4c,Mineralogie, Boden-, Gesteins- und Lagerstättenkunde
+19.4d,Paläontologie
+19.4p,Personen zu Geologie, Mineralogie, Historischer Geologie, Boden-, Gesteins- und Lagerstättenkunde, Paläontologie
+19.5,Meteorologie, Klimatologie, Hochatmosphäre, Magnetosphäre
+19.5p,Personen zu Meteorologie, Klimatologie, Hochatmosphäre, Magnetosphäre
+20,Astronomie, Weltraumforschung
+20p,Personen zu Astronomie, Weltraumforschung
+21.1,Physik (Allgemeines), Mathematische Physik
+21.2,Mechanik, Wärme, Akustik
+21.3,Elektrizität, Magnetismus, Optik
+21.4,Elementarteilchen, Kern-, Atom-, Molekularphysik
+21.5,Plasma, Gas, Flüssigkeit, Festkörper
+21.5p,Personen zu Physik
+22.1,Chemie (Allgemeines)
+22.2,Theoretische und Physikalische Chemie
+22.3,Analytische Chemie und Untersuchungsmethoden
+22.4,Anorganische Chemie
+22.5,Organische Chemie
+22.5p,Personen zu Chemie
+23.1a,Biologie allgemein
+23.1b,Genetik, Evolution
+23.2,Biochemie, Biophysik, Zytologie
+23.3,Mikrobiologie
+23.4,Untersuchungsmethoden (Biologie)
+23.4p,Personen zu allgemeiner Biologie, Mikrobiologie
+24.1,Botanik (Allgemeines)
+24.2,Allgemeine Botanik
+24.2a,Pflanzenanatomie, Pflanzenphysiologie
+24.2b,Pflanzensoziologie, Pflanzenökologie, Pflanzengeografie
+24.3,Spezielle Botanik
+24.3p,Personen zu Botanik
+25.1,Zoologie (Allgemeines)
+25.2,Allgemeine Zoologie
+25.2a,Anatomie, Tierphysiologie
+25.2b,Tiersoziologie, Tierökologie, Tiergeografie, Verhaltensforschung
+25.3,Spezielle Zoologie
+25.3p,Personen zu Zoologie
+26,Anthropologie
+26p,Personen zu Anthropologie
+27.1a,Medizin (Allgemeines)
+27.1b,Medizingeschichte
+27.2,Anatomie
+27.3a,Physiologie (Allgemeines), Physiologische Chemie
+27.3b,Blut, Kardiovaskuläres System, Atmungsorgan
+27.3c,Ernährung, Stoffwechsel, Inkretion
+27.3d,Haut, Knochen, Nerven, Muskeln, Sinnesorgane
+27.3e,Harn- und Geschlechtsorgane
+27.4,Allgemeine Pathologie, Onkologie, Experimentelle Medizin
+27.5,Allgemeine Diagnostik
+27.6,Medizinische Radiologie, Nuklearmedizin
+27.7,Allgemeine Therapie
+27.8a,Pharmazie, Pharmakologie, Toxikologie
+27.8b,Immunologie
+27.9,Innere Medizin
+27.9a,Hämatologie, Kardiologie
+27.9b,Pulmonologie
+27.9c,Gastroenterologie, Endokrinopathie
+27.9d,Urologie, Nephrologie, Andrologie
+27.9e,Knochen, Gelenke, Muskeln
+27.9f,Infektionen
+27.10,Chirurgie, Orthopädie
+27.11,Gynäkologie, Geburtshilfe
+27.12,Kinderheilkunde
+27.13,Neurologie, Psychiatrie
+27.14,Dermatologie, Venerologie
+27.15,Hals-Nasen-Ohren-Heilkunde
+27.16,Augenheilkunde
+27.17,Zahnmedizin
+27.18,Sexualmedizin
+27.19,Sondergebiete der Medizin
+27.20,Hygiene, Gesundheitswesen
+27.20p,Personen zu Medizin, Tiermedizin
+27.21,Tiermedizin
+28,Mathematik
+28p,Personen zu Mathematik
+29,Stochastik, Operations Research
+29p,Personen zu Stochastik, Operations Research
+30,Informatik, Datenverarbeitung
+30m,Informatikprodukte (Hardware- und Softwareprodukte)
+30p,Personen zu Informatik, Datenverarbeitung
+31.1a,Technik (Allgemeines)
+31.1b,Technische Physik, Technische Mathematik
+31.1c,Mess-, Steuerungs- und Regelungstechnik
+31.1d,Werkstoffkunde, Werkstoffprüfung
+31.1e,Technikgeschichte
+31.2,Sanitärtechnik, Umwelttechnik
+31.3a,Architektur
+31.3ab,Ortsgebundene Bauwerke
+31.3b,Bautechnik
+31.3p,Personen zu Architektur, Bautechnik
+31.4,Bergbau, Hüttentechnik
+31.5,Energietechnik, Kerntechnik
+31.6,Maschinenbau
+31.7,Fahrzeugbau, Fördertechnik, Raumfahrttechnik
+31.8a,Fertigungstechnik
+31.8b,Feinwerktechnik
+31.9a,Elektrotechnik, Elektrische Energietechnik
+31.9b,Elektronik, Nachrichtentechnik
+31.10,Verfahrenstechnik, Technische Chemie
+31.11,Lebensmitteltechnologie
+31.12,Textiltechnik, Gummi- und Lederverarbeitung
+31.13,Holzbearbeitung
+31.14,Papierherstellung, Grafische Technik
+31.15,Glas, Keramik, Steine und Erden
+31.16,Militärtechnik
+31.16p,Personen zu Technik (ohne Architektur, Bautechnik)
+32.1a,Landwirtschaft allgemein
+32.1b,Landwirtschaftsgeschichte
+32.2,Agrarpolitik, Agrarmarkt, Landwirtschaftliche Betriebslehre
+32.3,Ackerbau
+32.4,Gartenbau, Obstbau
+32.5,Phytomedizin
+32.6,Tierzucht, Tierhaltung
+32.7,Milchwirtschaft
+32.8,Forstwirtschaft
+32.9,Jagd
+32.10,Fischerei, Fischzucht
+32.10p,Personen zu Landwirtschaft, Garten
+33.1,Hauswirtschaft, Körperpflege
+33.2,Kochen, Backen, Lebens- und Genussmittel, Küchengerät
+33.3,Mode, Kleidung
+33.3p,Personen zu Hauswirtschaft, Körperpflege, Mode, Kleidung
+34.1,Sport (Allgemeines)
+34.2,Geschichte des Sports
+34.3,Einzelne Sportarten
+34.3p,Personen zu Sport
+35,Spiel, Unterhaltung
+35p,Personen zu Spiel, Unterhaltung
+36,Basteln, Handarbeiten, Heimwerken
+36p,Personen zu Basteln, Handarbeiten, Heimwerken

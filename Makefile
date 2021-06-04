@@ -52,7 +52,7 @@ TITLE_LINK_OBJS += 044P_9.csv # Gestaltungsmerkmale auf bibliografischer Ebene
 GND_LINK_OBJS := 022R.csv 028R.csv 029R.csv 030R.csv 041R.csv 065R.csv
 
 USEROBJ := titel.dat gnd.dat gnd.csv
-USEROBJ += 0XXR.csv 0XXX_9.csv 044H_9.csv 044K_9.csv
+USEROBJ += 0XXR.csv 0XXX_9.csv 044H_9.csv 044K_9.csv Tu_names.csv
 
 user: $(addprefix $(USERDIR)/,$(USEROBJ)) | prepare
 
@@ -64,6 +64,9 @@ $(USERDIR)/titel.dat: $(DUMPFILE) | prepare
 
 $(USERDIR)/gnd.csv: $(USERDIR)/gnd.dat
 	$(PICA) select "003@.0,002@.0,001A.0,003U.a" -H "gnd_id,bbg,ser,uri" $< -o $@
+
+$(USERDIR)/Tu_names.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "002@.0 =^ 'Tu' && 022A.a?" $< | $(PICA) select "003@.0,022A.a" -H "gnd_id,name2" -o $@
 
 $(USERDIR)/022A_9.csv: $(USERDIR)/titel.dat; $(PICA) filter "022A/*{9? && 7 =^ 'T'}" $< | $(PICA) select "003@.0,022A/*{9? && 7 =^ 'T',9,a}" -o $@
 $(USERDIR)/028A_9.csv: $(USERDIR)/titel.dat; $(PICA) filter "028A/*{9? && 7 =^ 'T'}" $< | $(PICA) select "003@.0,028A/*{9? && 7 =^ 'T',9,a}" -o $@
@@ -129,7 +132,7 @@ $(STATSDIR)/gnd_relation_count.csv: $(USERDIR)/0XXR.csv
 $(STATSDIR)/gnd_entity_types.csv: $(USERDIR)/gnd.dat
 	$(PICA) frequency "002@.0" $< -o $@
 
-title-analysis: $(USERDIR)/0XXX_9.csv $(USERDIR)/044H_9.csv $(USERDIR)/044K_9.csv $(USERDIR)/gnd.csv $(STATSDIR)/title_count.csv
+title-analysis: $(USERDIR)/0XXX_9.csv $(USERDIR)/044H_9.csv $(USERDIR)/044K_9.csv $(USERDIR)/gnd.csv $(STATSDIR)/title_count.csv $(USERDIR)/Tu_names.csv
 	$(SCRIPTS)/title.py
 
 $(STATSDIR)/gnd_systematik.csv: $(USERDIR)/gnd.dat

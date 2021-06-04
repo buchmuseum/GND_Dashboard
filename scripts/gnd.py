@@ -32,7 +32,7 @@ def main():
         "stats/gnd_systematik.csv", low_memory=False, names=["id", "count"]
     )
     names = pd.read_csv(
-        "stats/gnd_systematik_names.csv", low_memory=False, names=["id", "name"]
+        "data/gnd_systematik_names.csv", low_memory=False, names=["id", "name"]
     )
 
     result = pd.merge(df, names, on="id", how="left")

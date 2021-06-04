@@ -36,7 +36,7 @@ def main():
         title_count = int(f.read())
 
     # GND-Stammdaten (ID (gnd_id), Erfassungsdatum (ser) und URL (uri))
-    gnd_data = pd.read_csv("data/gnd.csv", low_memory=False)
+    gnd_data = pd.read_csv("data/user/gnd.csv", low_memory=False)
 
     gnd_data["created_at"] = pd.to_datetime(
         gnd_data["ser"].str[-8:], format="%d-%m-%y", errors="coerce"
@@ -44,11 +44,24 @@ def main():
 
     # Verknüpfungen von DNB-Titeldaten aus den Feldern `0XXX $9`.
     title_links = pd.read_csv(
-        "data/0XXX_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+        "data/user/0XXX_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
     )
+
+    # Tu_names
+    Tu_names = pd.read_csv("data/user/Tu_names.csv", low_memory=False)
 
     df = pd.merge(title_links, gnd_data[["gnd_id", "bbg"]], on="gnd_id", how="left")
     df = df[pd.notna(df.bbg) & df["bbg"].str.startswith("T")]
+
+    df = pd.merge(df, Tu_names, on="gnd_id", how="left")
+    df["name"] = df["name2"].fillna(df["name"])
+    df = df.drop(columns=["name2"])
+
+    # FIXME
+    df.loc[df.gnd_id == "040015157", "name"] = "Bibel. Altes Testament"
+    df.loc[df.gnd_id == "040417719", "name"] = "Bibel. Neues Testament"
+    df.loc[df.gnd_id == "040158063", "name"] = "Bibel. Evangelien"
+    df.loc[df.gnd_id == "040287009", "name"] = "Bibel. Johannesevangelium"
 
     # Anzahl der Verknüpfungen von DNB-Titeln und GND-Entitäten.
     with open("stats/title_gnd_links.csv", "w") as f:

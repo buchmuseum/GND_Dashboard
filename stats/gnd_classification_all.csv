@@ -91,8 +91,8 @@ id,count,name
 28p,4130,Personen zu Mathematik
 19.1dp,4103,Personen zu Geografie
 6.1p,4028,Personen zu Kultur und Künsten
-6.2a,4006,Bildungswesen (Allgemeines)
 10.13p,4006,Personen zu Handel
+6.2a,4006,Bildungswesen (Allgemeines)
 31.10,3976,Verfahrenstechnik
 13.2,3942,Plastik
 19.1a,3931,Geografie
@@ -223,8 +223,8 @@ id,count,name
 13.1b,1051,Kunstgeschichte
 31.15,1050,Glas
 10.5,1042,Finanzwirtschaft
-32.3,1039,Ackerbau
 10.9c,1039,Kapitalmarkt
+32.3,1039,Ackerbau
 5.2,1019,Entwicklungspsychologie
 10.11e,1005,Marketing
 9.5b,1005,Sozialversicherung und Gesetzliche Krankenversicherung
@@ -292,8 +292,8 @@ id,count,name
 25.1,496,Zoologie (Allgemeines)
 10.11m,489,Spezielle Informationssysteme
 3.4b,485,Dogmatik
-32.10,475,Fischerei
 3.3,475,Kirchengeschichte
+32.10,475,Fischerei
 7.9a,472,Finanzrecht
 9.3e,469,Kommunikation
 17.4,462,Volksliteratur
@@ -308,31 +308,31 @@ id,count,name
 27.9e,430,Knochen
 10.11c,429,Beschaffung
 15.2,422,Kabarett
-10.11i,417,Büro
 7.11b,417,Berufsrecht
+10.11i,417,Büro
 27.9f,417,Infektionen
 27.12,415,Kinderheilkunde
 3.2b,413,Neues Testament
 3.4a,412,Systematische Theologie (Allgemeines)
 7.5a,403,Dienstrecht (auch Richter)
-3.2p,402,Personen der Bibel
 31.1e,402,Technikgeschichte
 10.2ea,402,Außenwirtschaft
+3.2p,402,Personen der Bibel
 33.1,390,Hauswirtschaft
 32.9,388,Jagd
 3.2a,388,Altes Testament
 3.4c,383,Theologische Anthropologie
 10.5p,382,Personen zu Finanzwirtschaft
 27.3b,378,Blut
-10.11b,373,Mathematische Methoden
 32.7,373,Milchwirtschaft
+10.11b,373,Mathematische Methoden
 27.19,368,Sondergebiete der Medizin
 11.3b,365,Namenkunde
 10.3p,364,Personen zu öffentlichen Aufgaben
-27.16,353,Augenheilkunde
 6.2b,353,Geschichte des Bildungswesens
-11.2c,350,Phonetik
+27.16,353,Augenheilkunde
 7.10b,350,Gewerblicher Rechtsschutz
+11.2c,350,Phonetik
 27.14,342,Dermatologie
 10.2b,337,Haushalt
 10.2c,335,Mikroökonomie
@@ -350,9 +350,9 @@ id,count,name
 4.4,283,Metaphysik
 27.15,282,Hals-Nasen-Ohren-Heilkunde
 19.5p,280,Personen zu Meteorologie
-3.5ca,278,Seelsorge
 7.12a,278,Allgemeiner Teil des Bürgerlichen Rechts
 27.6,278,Medizinische Radiologie
+3.5ca,278,Seelsorge
 5.4,266,Tiefenpsychologie
 7.12,265,Bürgerliches Recht
 10.3d,260,Rohstoffwirtschaft
@@ -365,8 +365,8 @@ id,count,name
 23.4,243,Untersuchungsmethoden (Biologie)
 10.15,223,Werbewirtschaft
 27.3a,218,Physiologie (Allgemeines)
-10.15p,216,Personen zu Werbewirtschaft
 29p,216,Personen zu Stochastik
+10.15p,216,Personen zu Werbewirtschaft
 10.4p,208,Personen zu Wirtschaftspolitik
 26,201,Anthropologie
 9.3a,195,Soziales Leben
@@ -413,5 +413,5 @@ id,count,name
 9.2,16,Sozialwissenschaften allgemein
 7.1b,9,Rechtsvergleich
 39p,1,
-0.0p,1,
 6,1,
+0.0p,1,
