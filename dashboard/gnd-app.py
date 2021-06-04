@@ -12,7 +12,7 @@ satzart = st.sidebar.selectbox(
     "Über welche GND-Satzart möchten Sie etwas erfahren?",
     ('alle', "Tp - Personen", "Tb - Körperschaften", "Tg - Geografika", "Ts - Sachbegriffe", "Tu - Werke", "Tf - Veranstaltungen")
 )
-st.sidebar.info('Diese Widgets wurden von der Python Community in der Deutschen Nationalbibliothek geschrieben. Das sind die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann.')
+st.sidebar.info('Diese Widgets haben die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
 
 def ramon():
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
