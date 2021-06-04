@@ -60,7 +60,9 @@ def ramon():
 
 def wirkungsorte_musik():
     musiker_orte = pd.read_csv('musiker_orte.csv', sep='\t', index_col='idn')
-    limiter = st.slider('Jahresfilter', min_value=1400, max_value=musiker_orte['jahrzehnt'].max(), value=(1900,1950), step=10)
+    st.header('Wirkungszentren der Musik 1400-2010')
+    st.write('Eine Auswertung der veröffentlichten Titel von Musikern und deren Wirkungszeiten erlaubt Rückschlüsse auf die musikalischen Zentren, wie sie im Bestand der DNB repräsentiert sind.')
+    limiter = st.slider('Jahresfilter', min_value=1400, max_value=musiker_orte['jahrzehnt'].max(), value=(1900), step=10)
     #Karte
     INITIAL_VIEW_STATE = pdk.ViewState(
         latitude=50.67877877706058,
@@ -70,26 +72,32 @@ def wirkungsorte_musik():
         bearing=0
     )
 
+    COLOR_BREWER_BLUE_SCALE = [
+    [240, 249, 232],
+    [204, 235, 197],
+    [168, 221, 181],
+    [123, 204, 196],
+    [67, 162, 202],
+    [8, 104, 172],
+]
     musiker_layer = pdk.Layer(
-        "ScatterplotLayer",
-        musiker_orte.loc[(musiker_orte['jahrzehnt'] >= limiter[0]) & (musiker_orte['jahrzehnt'] <= limiter[1])],
-        pickable=True,
-        opacity=0.5,
-        stroked=True,
-        filled=True,
-        radius_min_pixels=1,
-        radius_max_pixels=100,
-        line_width_min_pixels=1,
-        get_position='[lon, lat]',
-        get_radius="count",
-        get_fill_color=[255, 140, 0],
-        get_line_color=[0, 0, 0],
-    )
+    "HeatmapLayer",
+    musiker_orte.loc[(musiker_orte['jahrzehnt'] == limiter)],
+    opacity=0.9,
+    intensity=0.8,
+    get_position='[lon, lat]',
+    color_range=COLOR_BREWER_BLUE_SCALE,
+    threshold=0.1,
+    aggregation=pdk.types.String("SUM"),
+    get_weight="count",
+)
 
     st.pydeck_chart(pdk.Deck(
     musiker_layer,
     initial_view_state=INITIAL_VIEW_STATE,
     map_style=pdk.map_styles.LIGHT))
+
+    st.table(musiker_orte.loc[(musiker_orte['jahrzehnt'] == limiter),['count','name']].nlargest(10, 'count'))
 
 def stat_allgemein():   
     #Gesamt Entity Count
@@ -134,7 +142,7 @@ def load_gnd_top_daten():
 
 #main
 st.title('GND-Dashboard beta')
-st.warning('Die Daten sind werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021')
+st.warning('Die Daten werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021')
 st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
 
 #Entities nach Typ
