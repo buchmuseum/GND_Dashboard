@@ -55,13 +55,41 @@ def ramon():
     st.pydeck_chart(pdk.Deck(
     scatterplotlayer,
     initial_view_state=INITIAL_VIEW_STATE,
-    #map_provider="mapbox",
     map_style=pdk.map_styles.LIGHT,
-    #api_keys={'mapbox':'pk.eyJ1IjoiYXduZGxyIiwiYSI6ImNrbWt0OWtxOTE0ZW4ycHFvOGNjb2FwcXgifQ.lv0Ikqq0rIYB6wgkMzrx6Q'},
     tooltip={"html": "<b>{Name}</b><br \>Wirkungsort von {Anzahl} Personen"}))
 
-def tb_stat():
-    pass
+def wirkungsorte_musik():
+    musiker_orte = pd.read_csv('musiker_orte.csv', sep='\t', index_col='idn')
+    limiter = st.slider('Jahresfilter', min_value=1400, max_value=musiker_orte['jahrzehnt'].max(), value=(1900,1950), step=10)
+    #Karte
+    INITIAL_VIEW_STATE = pdk.ViewState(
+        latitude=50.67877877706058,
+        longitude=8.129981238464392,
+        zoom=4.5,
+        max_zoom=16,
+        bearing=0
+    )
+
+    musiker_layer = pdk.Layer(
+        "ScatterplotLayer",
+        musiker_orte.loc[(musiker_orte['jahrzehnt'] >= limiter[0]) & (musiker_orte['jahrzehnt'] <= limiter[1])],
+        pickable=True,
+        opacity=0.5,
+        stroked=True,
+        filled=True,
+        radius_min_pixels=1,
+        radius_max_pixels=100,
+        line_width_min_pixels=1,
+        get_position='[lon, lat]',
+        get_radius="count",
+        get_fill_color=[255, 140, 0],
+        get_line_color=[0, 0, 0],
+    )
+
+    st.pydeck_chart(pdk.Deck(
+    musiker_layer,
+    initial_view_state=INITIAL_VIEW_STATE,
+    map_style=pdk.map_styles.LIGHT))
 
 def stat_allgemein():   
     #Gesamt Entity Count
@@ -97,6 +125,7 @@ def stat_allgemein():
     )
     st.altair_chart(classification_count, use_container_width=True)
 
+@st.cache
 def load_gnd_top_daten():
     gnd_top_df = pd.DataFrame()
     for file in glob.glob(f'{path}/../stats/title_gnd_top10_*.csv'):
@@ -104,7 +133,8 @@ def load_gnd_top_daten():
     return gnd_top_df
 
 #main
-st.title('GND-Dashboard')
+st.title('GND-Dashboard beta')
+st.warning('Die Daten sind werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021')
 st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
 
 #Entities nach Typ
@@ -145,10 +175,9 @@ elif satzart == 'Tb - Körperschaften':
     tb_stat()
 
 elif satzart == "Tg - Geografika":
+    wirkungsorte_musik()
     ramon()
 
-#TODO
-#Diagramm Anzahl Sätze je Satzart und Katalogisierungslevel
 
 st.header('GND in der Deutschen Nationalbibliothek')
 
@@ -167,6 +196,7 @@ if satzart == 'alle':
 else:
     st.header(f'TOP 10 {satzart} in DNB-Titeldaten')
     top_daten = load_gnd_top_daten()
+
     gnd_top = alt.Chart(top_daten.loc[top_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
         alt.X('name', title='Entitäten', sort='-y'),
         alt.Y('count', title='Anzahl'),
