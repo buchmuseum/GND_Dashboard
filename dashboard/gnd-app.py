@@ -37,7 +37,7 @@ def ramon():
     df.drop(columns=['id'], inplace=True)
     df.rename(columns={'name': 'Name', 'count': 'Anzahl'}, inplace=True)
 
-    st.header('TOP 10 Wirkungsorte von GND-Personen')
+    st.header('TOP Wirkungsorte von GND-Personen')
     st.markdown('Von allen Personensätzen (Tp) weisen 782.682 Angaben zum Wirkungsort der jeweiligen Person auf.')
 
     #Balkendiagramm
