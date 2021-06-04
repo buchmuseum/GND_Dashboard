@@ -14,7 +14,7 @@ satzart = st.sidebar.selectbox(
     "Über welche GND-Satzart möchten Sie etwas erfahren?",
     ('alle', "Tp - Personen", "Tb - Körperschaften", "Tg - Geografika", "Ts - Sachbegriffe", "Tu - Werke", "Tf - Veranstaltungen")
 )
-st.sidebar.info('Diese Widgets wurden von der Python Community in der Deutschen Nationalbibliothek geschrieben. Das sind die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann.')
+st.sidebar.info('Diese Widgets haben die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
 
 def sachbegriff_cloud():
     df = pd.read_csv(f'{path}/sachbegriffe.csv', index_col=None)
@@ -160,8 +160,8 @@ def load_gnd_top_daten():
 
 #main
 st.title('GND-Dashboard beta')
-st.warning('Die Daten werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021')
-st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhaltenden die verfügbaren Auswertungen und Statstiken.')
+st.warning('Die Daten werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021!')
+st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken.')
 
 #Entities nach Typ
 df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])

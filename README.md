@@ -67,10 +67,14 @@ Gesamtmenge ein.
 * [gnd_codes_top10.csv](stats/gnd_codes_top10.csv) — Top10 Verteilung der Releation-Codes
 * [title_gnd_links.csv](stats/title_gnd_links.csv) — Anzahl GND-Verknüpfungen in DNB-Titeldaten
 * [title_gnd_links_unique.csv](stats/title_gnd_links_unique.csv) — Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
+* [title_gnd_links_auto.csv](stats/title_gnd_links_auto.csv) — Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten (maschinelle Prozesse, Feld `044H.9`)
+* [title_gnd_links_ext.csv](stats/title_gnd_links_auto.csv) — Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten (Fremddaten; Feld `044K.9`)
 * [title_gnd_top10.csv](stats/title_gnd_top10.csv) — Top10 GND-Entitäten in den DNB-Titeldaten
+* [title_gnd_newcomer_top10.csv](stats/title_gnd_newcomer_top10.csv) — Top10 Entitäten, die im Jahr 2021 erfasst wurden. 
 * [title_gnd_mean.csv](stats/title_gnd_mean.csv) — Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
 
 ### Nach Entitätstyp
 
 * [title_gnd_top10_T{bfgpsu}.csv](stats/title_gnd_top10_Tp.csv) — Top10 GND-Entitäten in den DNB-Titeldaten (pro Entitätstyp)
 * [title_gnd_mean_T{bfgpsu}.csv](stats/title_gnd_mean_Tp.csv) — Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz (pro Entitätstyp)
+* [title_gnd_newcomer_top10_T{bfgpsu}.csv](stats/title_gnd_newcomer_top10_Tp.csv) — Top10 Entitäten, die im Jahr 2021 erfasst wurden (pro Entitätstyp)

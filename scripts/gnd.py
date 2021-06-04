@@ -7,14 +7,15 @@ import pandas as pd
 
 
 def main():
-    df_022R = pd.read_csv("data/user/022R.csv", low_memory=False)
-    df_028R = pd.read_csv("data/user/028R.csv", low_memory=False)
-    df_029R = pd.read_csv("data/user/029R.csv", low_memory=False)
-    df_030R = pd.read_csv("data/user/030R.csv", low_memory=False)
-    df_041R = pd.read_csv("data/user/041R.csv", low_memory=False)
-    df_065R = pd.read_csv("data/user/065R.csv", low_memory=False)
+   gnd_data = pd.read_csv("data/gnd.csv", low_memory=False)
 
-    df_0XXR = pd.concat([df_022R, df_028R, df_029R, df_030R, df_041R, df_065R])
+   df_0XXR = pd.read_csv(
+        "data/0XXR.csv",
+        names=["idn", "gnd_id", "name", "code"],
+        low_memory=False
+    )
+
+    df_0XXR = pd.merge(df_0XXR, gnd_data[["gnd_id", "bbg"]], on="gnd_id", how="left")
 
     # AUSWERTUNG RELATIONS-CODES
 
@@ -28,14 +29,12 @@ def main():
     df_codes.to_csv("stats/gnd_codes_all.csv")
     df_codes[:10].to_csv("stats/gnd_codes_top10.csv")
 
-    # for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
-    #     Tx_top10 = top10(df, bbg)
-    #     Tx_top10[:10].to_csv(f"stats/title_gnd_top10_{bbg}.csv")
-
     # AUSWERTUNG GND-SYSTEMATIK
-    df = pd.read_csv(sys.argv[1], low_memory=False, names=["id", "count"])
+    df = pd.read_csv(
+        "stats/gnd_systematik.csv", low_memory=False, names=["id", "count"]
+    )
     names = pd.read_csv(
-        "data/gnd_systematik_names.csv", low_memory=False, names=["id", "name"]
+        "stats/gnd_systematik_names.csv", low_memory=False, names=["id", "name"]
     )
 
     result = pd.merge(df, names, on="id", how="left")
