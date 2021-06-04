@@ -4,6 +4,8 @@ import altair as alt
 import pydeck as pdk
 import os
 import glob
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 path = os.path.dirname(__file__)
 
@@ -13,6 +15,22 @@ satzart = st.sidebar.selectbox(
     ('alle', "Tp - Personen", "Tb - Körperschaften", "Tg - Geografika", "Ts - Sachbegriffe", "Tu - Werke", "Tf - Veranstaltungen")
 )
 st.sidebar.info('Diese Widgets wurden von der Python Community in der Deutschen Nationalbibliothek geschrieben. Das sind die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann.')
+
+def sachbegriff_cloud():
+    df = pd.read_csv(f'{path}/sachbegriffe.csv', index_col=None)
+    datums_limit = st.slider('Datum wählen', min_value=df.datum.min(), max_value=df.datum.max(), value=df.datum.max())
+    haeufigkeit = pd.DataFrame(df.loc[df['datum'] == datums_limit].value_counts()[:100])
+
+    dict = haeufigkeit.to_dict(orient='records')
+    worte = {}
+    for record in dict:
+        worte.update({record['schlagwort']:record['n']})
+
+    wc = WordCloud(background_color="white", max_words=100, width=2000, height=800)
+    wc.generate_from_frequencies(worte)
+    st.image(wc)
+
+    
 
 def ramon():
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
@@ -77,7 +95,7 @@ def wirkungsorte_musik():
     musiker_scatter = pdk.Layer(
         "ScatterplotLayer",
         musik_filt,
-        opacity=0.9,
+        opacity=0.8,
         get_position='[lon, lat]',
         pickable=True,
         stroked=True,
@@ -180,7 +198,7 @@ elif satzart == "Tp - Personen":
 
     ramon()
 elif satzart == 'Tb - Körperschaften':
-    tb_stat()
+    pass
 
 elif satzart == "Tg - Geografika":
     wirkungsorte_musik()
@@ -234,3 +252,7 @@ else:
     with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
         mean = str(round(float(f.read()),2)).replace('.',',')
     st.write(f'Durchschnittlich {mean} Verknüpfungen zu {satzart}-Sätzen pro DNB-Titeldatensatz')
+
+#hier neue zahlen von niko, diagramm
+#newcomer 2021
+#todo tabelle unter musikwirkungsorten, lesbar
