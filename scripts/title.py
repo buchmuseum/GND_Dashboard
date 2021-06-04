@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+from datetime import datetime
 from typing import Optional
 
 import pandas as pd
@@ -28,18 +29,26 @@ def mean(df: pd.DataFrame, title_count: int, bbg: Optional[str]) -> float:
 
     return len(df) / title_count
 
-    # df_mean = df[["idn", "gnd_id"]].groupby(by="idn").count()
-    # return df_mean["gnd_id"].mean()
-
 
 def main():
     title_count = 0
     with open("stats/title_count.csv", "r") as f:
         title_count = int(f.read())
 
-    df = pd.read_csv("data/user/0XXX_9.csv", low_memory=False)
-    df = df[pd.notna(df["bbg"]) & df["bbg"].str.startswith("T")]
-    df = df.drop_duplicates(["idn", "gnd_id"], keep="last")
+    # GND-Stammdaten (ID (gnd_id), Erfassungsdatum (ser) und URL (uri))
+    gnd_data = pd.read_csv("data/gnd.csv", low_memory=False)
+
+    gnd_data["created_at"] = pd.to_datetime(
+        gnd_data["ser"].str[-8:], format="%d-%m-%y", errors="coerce"
+    )
+
+    # Verknüpfungen von DNB-Titeldaten aus den Feldern `0XXX $9`.
+    title_links = pd.read_csv(
+        "data/0XXX_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+    )
+
+    df = pd.merge(title_links, gnd_data[["gnd_id", "bbg"]], on="gnd_id", how="left")
+    df = df[pd.notna(df.bbg) & df["bbg"].str.startswith("T")]
 
     # Anzahl der Verknüpfungen von DNB-Titeln und GND-Entitäten.
     with open("stats/title_gnd_links.csv", "w") as f:
@@ -66,6 +75,35 @@ def main():
 
         with open(f"stats/title_gnd_mean_{bbg}.csv", "w") as f:
             f.write(str(Tx_mean))
+
+    # TOP-10 verknüpfte Entitäten (2021)
+    gnd_2021 = gnd_data[
+        (gnd_data["created_at"] >= "2021-01-01")
+        & (gnd_data["created_at"] <= "2021-12-31")
+    ]
+
+    df_2021 = df[df["gnd_id"].isin(gnd_2021["gnd_id"])]
+
+    gnd_top10 = top10(df_2021, None)
+    gnd_top10[:10].to_csv("stats/title_gnd_newcomer_top10.csv")
+
+    for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
+        Tx_top10 = top10(df_2021, bbg)
+        Tx_top10[:10].to_csv(f"stats/title_gnd_newcomer_top10_{bbg}.csv")
+
+    # Maschinell verknüpft
+    df = pd.read_csv(
+        "data/044H_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+    )
+    with open("stats/title_gnd_links_auto.csv", "w") as f:
+        f.write(str(len(df)))
+
+    # Aus Fremddaten
+    df = pd.read_csv(
+        "data/044K_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+    )
+    with open("stats/title_gnd_links_ext.csv", "w") as f:
+        f.write(str(len(df)))
 
 
 if __name__ == "__main__":
