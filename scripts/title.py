@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Optional
 
 import pandas as pd
+from dateutil.relativedelta import relativedelta
 
 
 def top10(df: pd.DataFrame, bbg: Optional[str]) -> pd.DataFrame:
@@ -36,19 +37,59 @@ def main():
         title_count = int(f.read())
 
     # GND-Stammdaten (ID (gnd_id), Erfassungsdatum (ser) und URL (uri))
-    gnd_data = pd.read_csv("data/gnd.csv", low_memory=False)
+    gnd_data = pd.read_csv("data/user/gnd.csv", low_memory=False)
 
     gnd_data["created_at"] = pd.to_datetime(
         gnd_data["ser"].str[-8:], format="%d-%m-%y", errors="coerce"
     )
 
+    ser_stat = (
+        gnd_data["created_at"]
+        .groupby(gnd_data.created_at.dt.to_period("M"))
+        .agg("count")
+    )
+    ser_stat.to_csv("stats/gnd_created_at.csv")
+
     # Verknüpfungen von DNB-Titeldaten aus den Feldern `0XXX $9`.
     title_links = pd.read_csv(
-        "data/0XXX_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+        "data/user/0XXX_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
     )
+
+    # Tu_names
+    Tu_names = pd.read_csv("data/user/Tu_names.csv", low_memory=False)
 
     df = pd.merge(title_links, gnd_data[["gnd_id", "bbg"]], on="gnd_id", how="left")
     df = df[pd.notna(df.bbg) & df["bbg"].str.startswith("T")]
+
+    df = pd.merge(df, Tu_names, on="gnd_id", how="left")
+    df["name"] = df["name2"].fillna(df["name"])
+    df["name"] = df["name"].str.replace(r"@", "")
+    df = df.drop(columns=["name2"])
+
+    # FIXME
+    REPLACEMENTS = [
+        ("040015157", "Bibel. Altes Testament"),
+        ("040417719", "Bibel. Neues Testament"),
+        ("040158063", "Bibel. Evangelien"),
+        ("040287009", "Bibel. Johannesevangelium"),
+        (
+            "121375707X",
+            "Deutschland. Bundesministerium für Bildung und Forschung. Referat Öffentlichkeitsarbeit",
+        ),
+        ("1225776619", "Rat der Stadt Dessau, Abt. Kultur"),
+        ("1228296863", "Katholische Kirche. Diözese Rottenburg"),
+        (
+            "1230450041",
+            "Friedrich-Schiller-Universität Jena. Zentrum für Lehrerbildung und Bildungsforschung",
+        ),
+        (
+            "121426946X",
+            "Schleswig-Holstein. Schleswig-Holsteinischer Landtag. Präsident",
+        ),
+    ]
+
+    for gnd_id, name in REPLACEMENTS:
+        df.loc[df.gnd_id == gnd_id, "name"] = name
 
     # Anzahl der Verknüpfungen von DNB-Titeln und GND-Entitäten.
     with open("stats/title_gnd_links.csv", "w") as f:
@@ -76,19 +117,21 @@ def main():
         with open(f"stats/title_gnd_mean_{bbg}.csv", "w") as f:
             f.write(str(Tx_mean))
 
-    # TOP-10 verknüpfte Entitäten (2021)
-    gnd_2021 = gnd_data[
-        (gnd_data["created_at"] >= "2021-01-01")
-        & (gnd_data["created_at"] <= "2021-12-31")
+    # TOP-10 verknüpfte Entitäten (letzten 365 Tages)
+    end = datetime.now()
+    start = end - relativedelta(years=1)
+
+    gnd_365 = gnd_data[
+        (gnd_data["created_at"] >= start) & (gnd_data["created_at"] <= end)
     ]
 
-    df_2021 = df[df["gnd_id"].isin(gnd_2021["gnd_id"])]
+    df_365 = df[df["gnd_id"].isin(gnd_365["gnd_id"])]
 
-    gnd_top10 = top10(df_2021, None)
+    gnd_top10 = top10(df_365, None)
     gnd_top10[:10].to_csv("stats/title_gnd_newcomer_top10.csv")
 
     for bbg in ["Tb", "Tf", "Tg", "Tp", "Ts", "Tu"]:
-        Tx_top10 = top10(df_2021, bbg)
+        Tx_top10 = top10(df_365, bbg)
         Tx_top10[:10].to_csv(f"stats/title_gnd_newcomer_top10_{bbg}.csv")
 
     # Maschinell verknüpft
