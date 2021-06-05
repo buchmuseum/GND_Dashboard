@@ -161,12 +161,11 @@ st.title('GND-Dashboard beta')
 st.warning('Die Daten werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021!')
 st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken.')
 with st.beta_expander("Methodik und Datenherkunft"):
-    st.write(
-        """Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
+    st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
 
-Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers [pica-rs](https://github.com/deutsche-nationalbibliothek/pica-rs) gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
+Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers pica.rs gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
 
-Das Dashboard ist mit dem Python-Framework Streamlit geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf [GitHub](https://github.com/buchmuseum/GND_Dashboard) zu finden. Die Diagramme wurden mit Altair erstellt, die Karten mit Deck GL (via Pydeck), die Wordcloud mit wordcloud.
+Das Dashboard ist mit dem Python-Framework Streamlit geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf (https://github.com/buchmuseum/GND_Dashboard)[Github] zu finden. Die Diagramme wurden mit Altair erstellt, die Karten mit Deck GL (via Pydeck), die Wordcloud mit wordcloud.
 
 Alle Skripte und Daten stehen unter CC0 Lizenz und können frei weitergenutzt werden.
 
