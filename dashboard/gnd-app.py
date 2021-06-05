@@ -30,8 +30,6 @@ def sachbegriff_cloud():
     wc.generate_from_frequencies(worte)
     st.image(wc)
 
-    
-
 def ramon():
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
     df.drop(columns=['id'], inplace=True)
@@ -162,6 +160,9 @@ def load_gnd_top_daten():
 st.title('GND-Dashboard beta')
 st.warning('Die Daten werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021!')
 st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken.')
+with st.beta_expander("Methodik und Datenherkunft"):
+    st.md('''
+    ''')
 
 #Entities nach Typ
 df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
