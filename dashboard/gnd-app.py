@@ -1,3 +1,4 @@
+from matplotlib.pyplot import title
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -5,7 +6,6 @@ import pydeck as pdk
 import os
 import glob
 from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 
 path = os.path.dirname(__file__)
 
@@ -88,7 +88,7 @@ def ramon():
 
 def wirkungsorte_musik():
     musiker_orte = pd.read_csv(f'{path}/musiker_orte.csv', sep='\t', index_col='idn')
-    st.header('Wirkungszentren der Musik 1400-2010')
+    st.header('Wirkungszentren der Musik 1400–2010')
     st.write('Eine Auswertung der veröffentlichten Titel von Musikern und deren Wirkungszeiten erlaubt Rückschlüsse auf die musikalischen Zentren, wie sie im Bestand der DNB repräsentiert sind.')
     limiter = st.slider('Jahresfilter', min_value=1400, max_value=int(musiker_orte['jahrzehnt'].max()), value=(1900), step=10)
     musik_filt= musiker_orte.loc[(musiker_orte['jahrzehnt'] == limiter)]
@@ -124,8 +124,17 @@ def wirkungsorte_musik():
     initial_view_state=INITIAL_VIEW_STATE,
     map_style=pdk.map_styles.LIGHT,
     tooltip={"html": "<b>{name}</b>"}))
-
-    st.table(musik_filt.filter(['name','norm'], axis='columns').nlargest(10, 'norm'))
+    st.subheader(f'TOP 10 Wirkungszentren der {limiter}er')
+    col1, col2 = st.beta_columns(2)
+    i = 1
+    for index, row in musik_filt.nlargest(10, 'norm').iterrows():
+        if i <= 5:
+            with col1:
+                st.write(f'{i}. {row["name"]}')
+        elif i > 5:
+            with col2:
+                st.write(f'{i}. {row["name"]}')
+        i += 1
 
 def stat_allgemein():   
     #Gesamt Entity Count
@@ -136,12 +145,12 @@ def stat_allgemein():
     #Relationen
     rels = pd.read_csv(f'{path}/../stats/gnd_codes_all.csv', index_col=False)
     st.header('Relationen')
-    st.write('GND-Datensätze können mit anderen Datensätzen verlinkt (»relationiert«) werden. Die Art der Verlinkung wird über einen Raltionierungscode beschrieben. Hier sind die am häufigsten verwendeten Relationierungscodes zu sehen. Die Auflösung der wichtigsten Codes gibt es [hier](https://wiki.dnb.de/download/attachments/51283696/Codeliste_ABCnachCode_Webseite_2012-07.pdf).')
+    st.write('GND-Datensätze können mit anderen Datensätzen verlinkt (»relationiert«) werden. Die Art der Verlinkung wird über einen Relationierungscode beschrieben. Hier sind die am häufigsten verwendeten Relationierungscodes zu sehen. Die Auflösung der wichtigsten Codes gibt es [hier](https://wiki.dnb.de/download/attachments/51283696/Codeliste_ABCnachCode_Webseite_2012-07.pdf).')
     rels_filt = st.slider('Zeige Top ...', 5, len(rels), 10, 1)
     relation_count = alt.Chart(rels.nlargest(rels_filt, 'count', keep='all')).mark_bar().encode(
         alt.X('code', title='Relationierungs-Code', sort='-y'),
         alt.Y('count', title='Anzahl'),
-        alt.Color('code', sort='-y'),
+        alt.Color('code', sort='-y', title='Relationierungscode'),
         tooltip=['count'],
     )
     st.altair_chart(relation_count, use_container_width=True)
@@ -158,7 +167,7 @@ def stat_allgemein():
     classification_count = alt.Chart(classification.nlargest(class_filt, 'count', keep='all')).mark_bar().encode(
         alt.X('id', title='Notation', sort='-y'),
         alt.Y('count', title='Anzahl'),
-        alt.Color('id', sort='-y'),
+        alt.Color('name', sort='-y', title="Bezeichnung"),
         tooltip=['count']
     )
     st.altair_chart(classification_count, use_container_width=True)
@@ -201,7 +210,7 @@ if satzart == 'alle':
     entity_count = alt.Chart(df).mark_bar().encode(
         alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
         alt.Y('entity', title='Satzart'),
-        alt.Color('level'),
+        alt.Color('level', title='Katalogisierungslevel'),
         tooltip=['count']
     )
     st.header('Entitäten und Katalogisierungslevel')
@@ -211,7 +220,7 @@ else:
     entity_count = alt.Chart(df.loc[df['entity'].str.startswith(satzart[:2])]).mark_bar().encode(
         alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
         alt.Y('entity', title='Satzart'),
-        alt.Color('level'),
+        alt.Color('level', title='Katalogisierungslevel'),
         tooltip=['count']
     )
     st.header(f'Katalogisierungslevel in Satzart {satzart}')
@@ -225,9 +234,9 @@ if satzart == 'alle':
     newcomer_daten = pd.read_csv(f'{path}/../stats/title_gnd_newcomer_top10.csv', index_col=None)
 
     newcomer = alt.Chart(newcomer_daten).mark_bar().encode(
-        alt.X('name', title='Entitäten', sort='-y'),
+        alt.X('gnd_id', title='Entitäten', sort='-y'),
         alt.Y('count', title='Anzahl'),
-        alt.Color('name', sort='-y'),
+        alt.Color('name', sort='-y', title='Entität'),
         tooltip=['count'],
     )
 
@@ -239,7 +248,7 @@ else:
     newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
         alt.X('name', title='Entitäten', sort='-y'),
         alt.Y('count', title='Anzahl'),
-        alt.Color('name', sort='-y'),
+        alt.Color('name', sort='-y', title='Entität'),
         tooltip=['count'],
     )
 st.altair_chart(newcomer, use_container_width=True)
@@ -249,14 +258,12 @@ if satzart == 'alle':
 
 elif satzart == "Tp - Personen":
     #hier werden dann alle widgets als einzelne funktionen aufgerufen, die zur jeweiligen Kategorie gehören sollen
-
     ramon()
-elif satzart == 'Tb - Körperschaften':
-    pass
 
 elif satzart == "Tg - Geografika":
     wirkungsorte_musik()
     ramon()
+
 elif satzart == "Ts - Sachbegriffe":
     sachbegriff_cloud()
 
@@ -269,10 +276,10 @@ if satzart == 'alle':
     top_daten = pd.read_csv(f'{path}/../stats/title_gnd_top10.csv', index_col=None)
 
     gnd_top = alt.Chart(top_daten).mark_bar().encode(
-        alt.X('name', title='Entitäten', sort='-y'),
-        alt.Y('count', title='Anzahl'),
-        alt.Color('name', sort='-y'),
-        tooltip=['count'],
+        alt.X('gnd_id:N', title='Entitäten', sort='-y'),
+        alt.Y('count:Q', title='Anzahl'),
+        alt.Color('name:N', sort='-y', title='Entität'),
+        tooltip=['count:Q'],
     )
 
 else:
@@ -280,31 +287,53 @@ else:
     top_daten = load_gnd_top_daten('top10')
 
     gnd_top = alt.Chart(top_daten.loc[top_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
-        alt.X('name', title='Entitäten', sort='-y'),
-        alt.Y('count', title='Anzahl'),
-        alt.Color('name', sort='-y'),
-        tooltip=['count'],
+        alt.X('gnd_id:N', title='Entitäten', sort='-y'),
+        alt.Y('count:Q', title='Anzahl'),
+        alt.Color('name:N', sort='-y', title='Entität'),
+        tooltip=['count:Q'],
     )
-st.write('Verknüpfungen, die maschinell erzeugt wurden, aus Fremddaten stammen oder verwaist sind, wurden nicht in die Auswertung einbezogen. Eine detaillierte Auflistung der ausgewerteten Felder sind im [GitHub-Repository](https://git.io/JG5vN) dieses Dashboards dokumentiert.')
+st.write('Verknüpfungen, die maschinell erzeugt wurden, aus Fremddaten stammen oder verwaist sind, wurden nicht in die Auswertung einbezogen. Eine detaillierte Auflistung der ausgewerteten Felder ist im [GitHub-Repository](https://git.io/JG5vN) dieses Dashboards dokumentiert.')
 st.altair_chart(gnd_top, use_container_width=True)
 
 #Durchschnittliche Verknüpfungen pro Satzart
 
 if satzart == 'alle':
     #Anzahl GND-Verknüpfungen in DNB-Titeldaten
-
     with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
         links = f'{int(f.read()):,}'
+    
+    #GND-Entitäten maschinell verknüpft
+    with open(f"{path}/../stats/title_gnd_links_auto.csv", "r") as f:
+        auto_entites = int(f.read())
 
-    #Anzahl der verknüpften GND-Entitäten in DNB-Titeldaten
+    #GND-Entitäten aus Fremddaten
+    with open(f"{path}/../stats/title_gnd_links_ext.csv", "r") as f:
+        fremd_entities = int(f.read())
+
+    #Anzahl der intellktuell verknüpften GND-Entitäten in DNB-Titeldaten
     with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
-        uniques = f'{int(f.read()):,}'
+        uniques = int(f.read())
+        uniques_str = f'{uniques:,}'
 
     #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
     with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
         mean = str(round(float(f.read()),2)).replace('.',',')
 
-    st.write(f"{links.replace(',','.')} Verknüpfungen zu {uniques.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
+    st.write(f"{links.replace(',','.')} intellektuell vergebene Verknüpfungen zu {uniques_str.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
+
+    entity_df = pd.DataFrame.from_dict({"intellektuell verknüpfte Entitäten": uniques, "Entitäten aus automatischen Prozessen": auto_entites, "Entitäten aus Fremddaten": fremd_entities}, orient = "index").reset_index()
+    entity_df = entity_df.rename(columns={"index":"Datenart", 0:"Anzahl"})
+    st.subheader('Datenherkunft der GND-Entitäten in DNB-Titeldaten')
+    st.write('Weniger als ein Drittel der GND-Entitäten in DNB-Titeldaten wurde in intellektuellen Erschließungsprozessen vergeben. Jeweils ca. ein weiteres Drittel wurde in maschinellen Erschließungsprozessen vergeben, ca. ein Drittel stammt aus Fremddaten.')
+    entities = alt.Chart(entity_df).mark_bar().encode(
+        alt.X('sum(Datenart):N', title='Datenart'),
+        alt.Y('sum(Anzahl):Q', title='Anzahl'),
+        color='Datenart',
+        tooltip='Anzahl:N'
+    )
+    st.altair_chart(entities, use_container_width=True)
+
+    
 else:
     with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
         mean = str(round(float(f.read()),2)).replace('.',',')
