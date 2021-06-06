@@ -14,7 +14,7 @@ satzart = st.sidebar.selectbox(
     "Über welche GND-Satzart möchten Sie etwas erfahren?",
     ('alle', "Tp - Personen", "Tb - Körperschaften", "Tg - Geografika", "Ts - Sachbegriffe", "Tu - Werke", "Tf - Veranstaltungen")
 )
-st.sidebar.info('Diese Widgets haben die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
+st.sidebar.info('Diese Widgets haben die GitHub-User [niko2342](https://github.com/niko2342/), [ramonvoges](https://github.com/ramonvoges), [a-wendler](https://github.com/a-wendler/) sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
 
 @st.cache
 def load_gnd_top_daten(typ):
