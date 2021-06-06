@@ -16,19 +16,31 @@ satzart = st.sidebar.selectbox(
 )
 st.sidebar.info('Diese Widgets haben die GitHub-User niko2342, ramonvoges, a-wendler sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
 
-def sachbegriff_cloud():
-    df = pd.read_csv(f'{path}/sachbegriffe.csv', index_col=None)
-    datums_limit = st.slider('Datum wählen', min_value=df.datum.min(), max_value=df.datum.max(), value=df.datum.max())
-    haeufigkeit = pd.DataFrame(df.loc[df['datum'] == datums_limit].value_counts()[:100])
+@st.cache
+def load_gnd_top_daten(typ):
+    gnd_top_df = pd.DataFrame()
+    for file in glob.glob(f'{path}/../stats/title_gnd_{typ}_*.csv'):
+        gnd_top_df = gnd_top_df.append(pd.read_csv(file, index_col=None))
+    return gnd_top_df
 
-    dict = haeufigkeit.to_dict(orient='records')
+def sachbegriff_cloud():
+    st.header('TOP 100 Sachbegriffe pro Tag')
+    st.write('Wählen Sie ein Datum aus den letzten 10 Werktagen und sehen Sie eine Wordcloud der 100 meistverwendeten GND-Sachbegriffe dieses Tages- Die Größe des Begriffes entspricht der Häufigkeit des Sachbegriffs')
+    files = glob.glob(f'{path}/../stats/*Ts-count.csv')
+    daten = [x[-23:-13] for x in files]
+    daten.sort()
+    daten_filter = st.select_slider('Wählen Sie ein Datum', options=daten, value=daten[-1])
+
+    df = pd.read_csv(f'{path}/../stats/{daten_filter}-Ts-count.csv')
+    
+    dict = df.to_dict(orient='records')
     worte = {}
     for record in dict:
-        worte.update({record['schlagwort']:record['n']})
+        worte.update({record['sachbegriff']:record['count']})
 
-    wc = WordCloud(background_color="white", max_words=100, width=2000, height=800)
+    wc = WordCloud(background_color="white", max_words=100, width=2000, height=800, colormap='tab20')
     wc.generate_from_frequencies(worte)
-    st.image(wc)
+    st.image(wc.to_array())
 
 def ramon():
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
@@ -124,6 +136,7 @@ def stat_allgemein():
     #Relationen
     rels = pd.read_csv(f'{path}/../stats/gnd_codes_all.csv', index_col=False)
     st.header('Relationen')
+    st.write('GND-Datensätze können mit anderen Datensätzen verlinkt (»relationiert«) werden. Die Art der Verlinkung wird über einen Raltionierungscode beschrieben. Hier sind die am häufigsten verwendeten Relationierungscodes zu sehen. Die Auflösung der wichtigsten Codes gibt es [hier](https://wiki.dnb.de/download/attachments/51283696/Codeliste_ABCnachCode_Webseite_2012-07.pdf).')
     rels_filt = st.slider('Zeige Top ...', 5, len(rels), 10, 1)
     relation_count = alt.Chart(rels.nlargest(rels_filt, 'count', keep='all')).mark_bar().encode(
         alt.X('code', title='Relationierungs-Code', sort='-y'),
@@ -140,6 +153,7 @@ def stat_allgemein():
     #Systematik
     classification = pd.read_csv(f'{path}/../stats/gnd_classification_all.csv', index_col=False)
     st.header('Systematik')
+    st.write('Die Entitäten der GND können in eine Systematik eingeordnet werden. Die Liste der möglichen Notationen gibt es [hier](http://www.dnb.de/gndsyst).')
     class_filt = st.slider('Zeige Top ...', 5, len(classification), 10, 1)
     classification_count = alt.Chart(classification.nlargest(class_filt, 'count', keep='all')).mark_bar().encode(
         alt.X('id', title='Notation', sort='-y'),
@@ -149,23 +163,28 @@ def stat_allgemein():
     )
     st.altair_chart(classification_count, use_container_width=True)
 
-@st.cache
-def load_gnd_top_daten():
-    gnd_top_df = pd.DataFrame()
-    for file in glob.glob(f'{path}/../stats/title_gnd_top10_*.csv'):
-        gnd_top_df = gnd_top_df.append(pd.read_csv(file, index_col=None))
-    return gnd_top_df
+    #Erstelldatum
+    created_at = pd.read_csv(f'{path}/../stats/gnd_created_at.csv', index_col='created_at', parse_dates=True, header=0, names=['created_at', 'count'])
+    
+    st.header('Zeitverlauf der GND-Datensatzerstellung')
+    st.write('Auf einer Zeitleiste wird die Anzahl der monatlich erstellten GND-Sätze aufgetragen. Die ersten Sätze stammen aus dem Januar 1972')
+    created_filt = st.slider('Zeitraum', 1972, 2021, (1972,2021), 1)
+    created = alt.Chart(created_at[f'{created_filt[0]}':f'{created_filt[1]}'].reset_index()).mark_line().encode(
+        alt.X('created_at:T', title='Erstelldatum'),
+        alt.Y('count:Q', title='Sätze pro Monat'),
+        tooltip=['count']
+    )
+    st.altair_chart(created, use_container_width=True)
 
 #main
-st.title('GND-Dashboard beta')
-st.warning('Die Daten werden noch überarbeitet und sind als vorläufig anzusehen. Die finale Version dieses Dashboards mit aktuellen Daten erscheint am 7. Juni 2021!')
+st.title('GND-Dashboard')
 st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken.')
 with st.beta_expander("Methodik und Datenherkunft"):
     st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
 
-Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers pica.rs gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
+Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers [pica.rs](https://github.com/deutsche-nationalbibliothek/pica-rs) gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
 
-Das Dashboard ist mit dem Python-Framework Streamlit geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf (https://github.com/buchmuseum/GND_Dashboard)[Github] zu finden. Die Diagramme wurden mit Altair erstellt, die Karten mit Deck GL (via Pydeck), die Wordcloud mit wordcloud.
+Das Dashboard ist mit dem Python-Framework [Streamlit](https://streamlit.io/) geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf [Github](https://github.com/buchmuseum/GND_Dashboard) zu finden. Die Diagramme wurden mit [Altair](https://altair-viz.github.io/index.html) erstellt, die Karten mit [Deck GL](https://deck.gl/) (via [Pydeck](https://deckgl.readthedocs.io/en/latest/#)), die Wordcloud mit [wordcloud](https://amueller.github.io/word_cloud/index.html).
 
 Alle Skripte und Daten stehen unter CC0 Lizenz und können frei weitergenutzt werden.
 
@@ -196,8 +215,34 @@ else:
         tooltip=['count']
     )
     st.header(f'Katalogisierungslevel in Satzart {satzart}')
+st.write('Alle GND-Entitäten können in verschiedenen Katalogisierungsleveln (1-7) angelegt werden. Je niedriger das Katalogisierungslevel, desto verlässlicher die Daten, weil Sie dann von qualifizierten Personen erstellt bzw. überprüft wurden.')
 st.altair_chart(entity_count, use_container_width=True)
 
+#gnd-newcomer
+if satzart == 'alle':
+    st.header(f'TOP 10 GND-Newcomer')
+    st.write('TOP 10 der GND-Entitäten, die in den letzten 365 Tagen angelegt wurden.')
+    newcomer_daten = pd.read_csv(f'{path}/../stats/title_gnd_newcomer_top10.csv', index_col=None)
+
+    newcomer = alt.Chart(newcomer_daten).mark_bar().encode(
+        alt.X('name', title='Entitäten', sort='-y'),
+        alt.Y('count', title='Anzahl'),
+        alt.Color('name', sort='-y'),
+        tooltip=['count'],
+    )
+
+else:
+    st.header(f'TOP 10 {satzart} GND-Newcomer')
+    st.write(f'TOP 10 der {satzart} Sätze, die in den letztn 365 Tagen angelegt wurden.')
+    newcomer_daten = load_gnd_top_daten('newcomer_top10')
+
+    newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
+        alt.X('name', title='Entitäten', sort='-y'),
+        alt.Y('count', title='Anzahl'),
+        alt.Color('name', sort='-y'),
+        tooltip=['count'],
+    )
+st.altair_chart(newcomer, use_container_width=True)
 
 if satzart == 'alle':
     stat_allgemein()
@@ -212,13 +257,15 @@ elif satzart == 'Tb - Körperschaften':
 elif satzart == "Tg - Geografika":
     wirkungsorte_musik()
     ramon()
+elif satzart == "Ts - Sachbegriffe":
+    sachbegriff_cloud()
 
 
 st.header('GND in der Deutschen Nationalbibliothek')
 
 #top_diagram mit Satzartfilter
 if satzart == 'alle':
-    st.header(f'TOP 10 GND-Entitäten in DNB-Titeldaten')
+    st.subheader(f'TOP 10 GND-Entitäten in DNB-Titeldaten')
     top_daten = pd.read_csv(f'{path}/../stats/title_gnd_top10.csv', index_col=None)
 
     gnd_top = alt.Chart(top_daten).mark_bar().encode(
@@ -229,8 +276,8 @@ if satzart == 'alle':
     )
 
 else:
-    st.header(f'TOP 10 {satzart} in DNB-Titeldaten')
-    top_daten = load_gnd_top_daten()
+    st.subheader(f'TOP 10 {satzart} in DNB-Titeldaten')
+    top_daten = load_gnd_top_daten('top10')
 
     gnd_top = alt.Chart(top_daten.loc[top_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
         alt.X('name', title='Entitäten', sort='-y'),
@@ -238,6 +285,7 @@ else:
         alt.Color('name', sort='-y'),
         tooltip=['count'],
     )
+st.write('Verknüpfungen, die maschinell erzeugt wurden, aus Fremddaten stammen oder verwaist sind, wurden nicht in die Auswertung einbezogen. Eine detaillierte Auflistung der ausgewerteten Felder sind im [GitHub-Repository](https://git.io/JG5vN) dieses Dashboards dokumentiert.')
 st.altair_chart(gnd_top, use_container_width=True)
 
 #Durchschnittliche Verknüpfungen pro Satzart
@@ -261,7 +309,3 @@ else:
     with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
         mean = str(round(float(f.read()),2)).replace('.',',')
     st.write(f'Durchschnittlich {mean} Verknüpfungen zu {satzart}-Sätzen pro DNB-Titeldatensatz')
-
-#hier neue zahlen von niko, diagramm
-#newcomer 2021
-#todo tabelle unter musikwirkungsorten, lesbar
