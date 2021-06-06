@@ -52,7 +52,12 @@ def ramon():
 
     #Balkendiagramm
     orte_filt = st.slider('Zeige Top ...', min_value=3, max_value=len(df), value=10, step=1)
-    graph_count = alt.Chart(df.nlargest(orte_filt, 'Anzahl', keep='all')).mark_bar().encode(alt.X('Name:N', sort='y'), y='Anzahl', tooltip=['Name', 'Anzahl'], color='Name')
+    graph_count = alt.Chart(df.nlargest(orte_filt, 'Anzahl', keep='all')).mark_bar().encode(
+        alt.X('Name:N', sort='y'),
+        alt.Y('Anzahl'),
+        alt.Color('Name:N', legend=alt.Legend(columns=2)),
+        tooltip=['Name', 'Anzahl']
+    )
     st.altair_chart(graph_count, use_container_width=True)
 
     #Karte
@@ -144,7 +149,7 @@ def stat_allgemein():
 
     #Relationen
     rels = pd.read_csv(f'{path}/../stats/gnd_codes_all.csv', index_col=False)
-    st.header('Relationen')
+    st.subheader('Relationen')
     st.write('GND-Datensätze können mit anderen Datensätzen verlinkt (»relationiert«) werden. Die Art der Verlinkung wird über einen Relationierungscode beschrieben. Hier sind die am häufigsten verwendeten Relationierungscodes zu sehen. Die Auflösung der wichtigsten Codes gibt es [hier](https://wiki.dnb.de/download/attachments/51283696/Codeliste_ABCnachCode_Webseite_2012-07.pdf).')
     rels_filt = st.slider('Zeige Top ...', 5, len(rels), 10, 1)
     relation_count = alt.Chart(rels.nlargest(rels_filt, 'count', keep='all')).mark_bar().encode(
@@ -161,7 +166,7 @@ def stat_allgemein():
 
     #Systematik
     classification = pd.read_csv(f'{path}/../stats/gnd_classification_all.csv', index_col=False)
-    st.header('Systematik')
+    st.subheader('Systematik')
     st.write('Die Entitäten der GND können in eine Systematik eingeordnet werden. Die Liste der möglichen Notationen gibt es [hier](http://www.dnb.de/gndsyst).')
     class_filt = st.slider('Zeige Top ...', 5, len(classification), 10, 1)
     classification_count = alt.Chart(classification.nlargest(class_filt, 'count', keep='all')).mark_bar().encode(
@@ -175,7 +180,7 @@ def stat_allgemein():
     #Erstelldatum
     created_at = pd.read_csv(f'{path}/../stats/gnd_created_at.csv', index_col='created_at', parse_dates=True, header=0, names=['created_at', 'count'])
     
-    st.header('Zeitverlauf der GND-Datensatzerstellung')
+    st.subheader('Zeitverlauf der GND-Datensatzerstellung')
     st.write('Auf einer Zeitleiste wird die Anzahl der monatlich erstellten GND-Sätze aufgetragen. Die ersten Sätze stammen aus dem Januar 1972')
     created_filt = st.slider('Zeitraum', 1972, 2021, (1972,2021), 1)
     created = alt.Chart(created_at[f'{created_filt[0]}':f'{created_filt[1]}'].reset_index()).mark_line().encode(
@@ -187,7 +192,7 @@ def stat_allgemein():
 
 #main
 st.title('GND-Dashboard')
-st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken.')
+st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
 with st.beta_expander("Methodik und Datenherkunft"):
     st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
 
@@ -213,7 +218,7 @@ if satzart == 'alle':
         alt.Color('level', title='Katalogisierungslevel'),
         tooltip=['count']
     )
-    st.header('Entitäten und Katalogisierungslevel')
+    st.subheader('Entitäten und Katalogisierungslevel')
 
 else:
 
@@ -223,13 +228,13 @@ else:
         alt.Color('level', title='Katalogisierungslevel'),
         tooltip=['count']
     )
-    st.header(f'Katalogisierungslevel in Satzart {satzart}')
+    st.subheader(f'Katalogisierungslevel in Satzart {satzart}')
 st.write('Alle GND-Entitäten können in verschiedenen Katalogisierungsleveln (1-7) angelegt werden. Je niedriger das Katalogisierungslevel, desto verlässlicher die Daten, weil Sie dann von qualifizierten Personen erstellt bzw. überprüft wurden.')
 st.altair_chart(entity_count, use_container_width=True)
 
 #gnd-newcomer
 if satzart == 'alle':
-    st.header(f'TOP 10 GND-Newcomer')
+    st.subheader(f'TOP 10 GND-Newcomer')
     st.write('TOP 10 der GND-Entitäten, die in den letzten 365 Tagen angelegt wurden.')
     newcomer_daten = pd.read_csv(f'{path}/../stats/title_gnd_newcomer_top10.csv', index_col=None)
 
@@ -241,7 +246,7 @@ if satzart == 'alle':
     )
 
 else:
-    st.header(f'TOP 10 {satzart} GND-Newcomer')
+    st.subheader(f'TOP 10 {satzart} GND-Newcomer')
     st.write(f'TOP 10 der {satzart} Sätze, die in den letztn 365 Tagen angelegt wurden.')
     newcomer_daten = load_gnd_top_daten('newcomer_top10')
 
