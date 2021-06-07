@@ -6,8 +6,11 @@ import pydeck as pdk
 import os
 import glob
 from wordcloud import WordCloud
+import streamlit_analytics
 
 path = os.path.dirname(__file__)
+
+streamlit_analytics.start_tracking()
 
 st.sidebar.header("Satzart wählen")
 satzart = st.sidebar.selectbox(
@@ -343,3 +346,5 @@ else:
     with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
         mean = str(round(float(f.read()),2)).replace('.',',')
     st.write(f'Durchschnittlich {mean} Verknüpfungen zu {satzart}-Sätzen pro DNB-Titeldatensatz')
+
+streamlit_analytics.stop_tracking()
