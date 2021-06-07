@@ -10,7 +10,7 @@ import streamlit_analytics
 
 path = os.path.dirname(__file__)
 
-streamlit_analytics.start_tracking(unsafe_password = st.secrets["ANALYTICS_PWD"])
+streamlit_analytics.start_tracking()
 
 st.sidebar.header("Satzart wählen")
 satzart = st.sidebar.selectbox(
