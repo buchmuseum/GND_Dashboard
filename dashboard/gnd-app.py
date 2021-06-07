@@ -10,7 +10,7 @@ import streamlit_analytics
 
 path = os.path.dirname(__file__)
 
-streamlit_analytics.start_tracking()
+streamlit_analytics.start_tracking(unsafe_password = st.secrets["analytics_pwd"])
 
 st.sidebar.header("Satzart wählen")
 satzart = st.sidebar.selectbox(
@@ -202,6 +202,8 @@ with st.beta_expander("Methodik und Datenherkunft"):
 Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers [pica.rs](https://github.com/deutsche-nationalbibliothek/pica-rs) gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
 
 Das Dashboard ist mit dem Python-Framework [Streamlit](https://streamlit.io/) geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf [Github](https://github.com/buchmuseum/GND_Dashboard) zu finden. Die Diagramme wurden mit [Altair](https://altair-viz.github.io/index.html) erstellt, die Karten mit [Deck GL](https://deck.gl/) (via [Pydeck](https://deckgl.readthedocs.io/en/latest/#)), die Wordcloud mit [wordcloud](https://amueller.github.io/word_cloud/index.html).
+
+Für grundlegende Zugriffsstatistik verwenden wir [streamlit-analytics](https://pypi.org/project/streamlit-analytics/). Dabei werden keine personenbezogenen Daten gespeichert.
 
 Alle Skripte und Daten stehen unter CC0 Lizenz und können frei weitergenutzt werden.
 
