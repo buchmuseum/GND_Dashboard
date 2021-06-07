@@ -195,7 +195,7 @@ def stat_allgemein():
 
 #main
 st.title('GND-Dashboard')
-st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
+st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und Sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
 with st.beta_expander("Methodik und Datenherkunft"):
     st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
 
