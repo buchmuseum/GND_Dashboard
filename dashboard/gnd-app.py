@@ -54,7 +54,7 @@ def wirkungsorte():
         alt.X('Name:N', sort='y'),
         alt.Y('Anzahl'),
         alt.Color('Name:N', legend=alt.Legend(columns=2)),
-        tooltip=['Name', 'Anzahl']
+        tooltip=[alt.Tooltip('Name:N', title='Ort'), alt.Tooltip('Anzahl:Q', title='Anzahl')]
     )
     st.altair_chart(graph_count, use_container_width=True)
 
@@ -156,7 +156,7 @@ def relationen():
         alt.X('code', title='Relationierungs-Code', sort='-y'),
         alt.Y('count', title='Anzahl'),
         alt.Color('code', sort='-y', title='Relationierungscode'),
-        tooltip=['count'],
+        tooltip=[alt.Tooltip('count', title='Anzahl'), alt.Tooltip('code', title='Code')]
     )
     st.altair_chart(relation_count, use_container_width=True)
 
@@ -174,7 +174,7 @@ def systematik():
         alt.X('id', title='Notation', sort='-y'),
         alt.Y('count', title='Anzahl'),
         alt.Color('name', sort='-y', title="Bezeichnung"),
-        tooltip=['count']
+        tooltip=[alt.Tooltip('id', title='Notation'), alt.Tooltip('name', title='Bezeichnung'), alt.Tooltip('count', title='Anzahl')]
     )
     return st.altair_chart(classification_count, use_container_width=True)
 
@@ -204,7 +204,7 @@ def entities():
             alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
             alt.Y('entity', title='Satzart'),
             alt.Color('level', title='Katalogisierungslevel'),
-            tooltip=['count']
+            tooltip=[alt.Tooltip('entity', title='Satzart'), alt.Tooltip( 'level', title='Katalogisierungslevel'), alt.Tooltip('count', title='Anzahl')]
         )
         st.subheader('Entitäten und Katalogisierungslevel')
 
@@ -214,7 +214,7 @@ def entities():
             alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
             alt.Y('entity', title='Satzart'),
             alt.Color('level', title='Katalogisierungslevel'),
-            tooltip=['count']
+            tooltip=[alt.Tooltip( 'level', title='Katalogisierungslevel'), alt.Tooltip('count', title='Anzahl')]
         )
         st.subheader(f'Katalogisierungslevel in Satzart {satzart}')
     st.write('Alle GND-Entitäten können in verschiedenen Katalogisierungsleveln (1-7) angelegt werden. Je niedriger das Katalogisierungslevel, desto verlässlicher die Daten, weil Sie dann von qualifizierten Personen erstellt bzw. überprüft wurden.')
@@ -231,19 +231,19 @@ def newcomer():
             alt.X('gnd_id', title='Entitäten', sort='-y'),
             alt.Y('count', title='Anzahl'),
             alt.Color('name', sort='-y', title='Entität'),
-            tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('bbg:N', title='Satzart'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')],
+            tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('bbg:N', title='Satzart'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')]
         )
 
     else:
         st.subheader(f'TOP 10 {satzart} GND-Newcomer')
-        st.write(f'TOP 10 der {satzart} Sätze, die in den letztn 365 Tagen angelegt wurden.')
+        st.write(f'TOP 10 der {satzart} Sätze, die in den letzten 365 Tagen angelegt wurden.')
         newcomer_daten = load_gnd_top_daten('newcomer_top10')
 
         newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
             alt.X('name', title='Entitäten', sort='-y'),
             alt.Y('count', title='Anzahl'),
             alt.Color('name', sort='-y', title='Entität'),
-            tooltip=['count'],
+            tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')]
         )
     st.altair_chart(newcomer, use_container_width=True)
 
@@ -257,7 +257,7 @@ def gnd_top():
             alt.X('gnd_id:N', title='Entitäten', sort='-y'),
             alt.Y('count:Q', title='Anzahl'),
             alt.Color('name:N', sort='-y', title='Entität'),
-            tooltip=['count:Q'],
+            tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('bbg:N', title='Satzart'), alt.Tooltip('count:Q', title='Anzahl')]
         )
 
     else:
@@ -268,7 +268,7 @@ def gnd_top():
             alt.X('gnd_id:N', title='Entitäten', sort='-y'),
             alt.Y('count:Q', title='Anzahl'),
             alt.Color('name:N', sort='-y', title='Entität'),
-            tooltip=['count:Q'],
+            tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')]
         )
     st.write('Verknüpfungen, die maschinell erzeugt wurden, aus Fremddaten stammen oder verwaist sind, wurden nicht in die Auswertung einbezogen. Eine detaillierte Auflistung der ausgewerteten Felder ist im [GitHub-Repository](https://git.io/JG5vN) dieses Dashboards dokumentiert.')
     st.altair_chart(gnd_top, use_container_width=True)
