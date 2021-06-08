@@ -1,4 +1,3 @@
-from matplotlib.pyplot import title
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -12,13 +11,6 @@ path = os.path.dirname(__file__)
 
 streamlit_analytics.start_tracking()
 
-st.sidebar.header("Satzart wählen")
-satzart = st.sidebar.selectbox(
-    "Über welche GND-Satzart möchten Sie etwas erfahren?",
-    ('alle', "Tp - Personen", "Tb - Körperschaften", "Tg - Geografika", "Ts - Sachbegriffe", "Tu - Werke", "Tf - Veranstaltungen")
-)
-st.sidebar.info('Diese Widgets haben die GitHub-User [niko2342](https://github.com/niko2342/), [ramonvoges](https://github.com/ramonvoges), [a-wendler](https://github.com/a-wendler/) sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
-
 @st.cache
 def load_gnd_top_daten(typ):
     gnd_top_df = pd.DataFrame()
@@ -27,6 +19,7 @@ def load_gnd_top_daten(typ):
     return gnd_top_df
 
 def sachbegriff_cloud():
+    #wordcloud der top 100 sachbegriffe eines auszuwählenden tages der letzten 10 werktage
     st.header('TOP 100 Sachbegriffe pro Tag')
     st.write('Wählen Sie ein Datum aus den letzten 10 Werktagen und sehen Sie eine Wordcloud der 100 meistverwendeten GND-Sachbegriffe dieses Tages- Die Größe des Begriffes entspricht der Häufigkeit des Sachbegriffs')
     files = glob.glob(f'{path}/../stats/*Ts-count.csv')
@@ -43,9 +36,10 @@ def sachbegriff_cloud():
 
     wc = WordCloud(background_color="white", max_words=100, width=2000, height=800, colormap='tab20')
     wc.generate_from_frequencies(worte)
-    st.image(wc.to_array())
+    return st.image(wc.to_array())
 
-def ramon():
+def wirkungsorte():
+    #ranking und karte der meistverwendeten wirkungsorte aller personen in der gnd
     df = pd.read_csv(f'{path}/wirkungsorte-top50.csv')
     df.drop(columns=['id'], inplace=True)
     df.rename(columns={'name': 'Name', 'count': 'Anzahl'}, inplace=True)
@@ -95,6 +89,7 @@ def ramon():
     tooltip={"html": "<b>{Name}</b><br \>Wirkungsort von {Anzahl} Personen"}))
 
 def wirkungsorte_musik():
+    #nach jahrzehnten zwischen 1400 und 2010 gefilterte auswertung der GND-Musikwerke, Musik-Personen und Wikrungsorte und daraus abgeleitete Zentren der Musikkultur, dargestellt auf einer Karte
     musiker_orte = pd.read_csv(f'{path}/musiker_orte.csv', sep='\t', index_col='idn')
     st.header('Wirkungszentren der Musik 1400–2010')
     st.write('Eine Auswertung der veröffentlichten Titel von Musikern und deren Wirkungszeiten erlaubt Rückschlüsse auf die musikalischen Zentren, wie sie im Bestand der DNB repräsentiert sind.')
@@ -144,13 +139,14 @@ def wirkungsorte_musik():
                 st.write(f'{i}. {row["name"]}')
         i += 1
 
-def stat_allgemein():   
-    #Gesamt Entity Count
+def gesamt_entity_count():
+    #Gesamtzahl der GND-Entitäten
     with open(f"{path}/../stats/gnd_entity_count.csv", "r") as f:
         entities = f'{int(f.read()):,}'
-    st.write(f"GND-Entitäten gesamt: {entities.replace(',','.')}")
+    return st.write(f"GND-Entitäten gesamt: {entities.replace(',','.')}")
 
-    #Relationen
+def relationen():
+    #Top 10 der GND-Relationierungscodes
     rels = pd.read_csv(f'{path}/../stats/gnd_codes_all.csv', index_col=False)
     st.subheader('Relationen')
     st.write('GND-Datensätze können mit anderen Datensätzen verlinkt (»relationiert«) werden. Die Art der Verlinkung wird über einen Relationierungscode beschrieben. Hier sind die am häufigsten verwendeten Relationierungscodes zu sehen. Die Auflösung der wichtigsten Codes gibt es [hier](https://wiki.dnb.de/download/attachments/51283696/Codeliste_ABCnachCode_Webseite_2012-07.pdf).')
@@ -167,7 +163,8 @@ def stat_allgemein():
         relations = f'{int(f.read()):,}'
     st.write(f"Relationen zwischen Entitäten gesamt: {relations.replace(',','.')}")
 
-    #Systematik
+def systematik():
+    #Ranking der meistverwendeten GND-Systematik-Notationen
     classification = pd.read_csv(f'{path}/../stats/gnd_classification_all.csv', index_col=False)
     st.subheader('Systematik')
     st.write('Die Entitäten der GND können in eine Systematik eingeordnet werden. Die Liste der möglichen Notationen gibt es [hier](http://www.dnb.de/gndsyst).')
@@ -178,9 +175,10 @@ def stat_allgemein():
         alt.Color('name', sort='-y', title="Bezeichnung"),
         tooltip=['count']
     )
-    st.altair_chart(classification_count, use_container_width=True)
+    return st.altair_chart(classification_count, use_container_width=True)
 
-    #Erstelldatum
+def zeitverlauf():
+    #zeitverlauf der erstellung der GND-Sätze ab Januar 1972
     created_at = pd.read_csv(f'{path}/../stats/gnd_created_at.csv', index_col='created_at', parse_dates=True, header=0, names=['created_at', 'count'])
     
     st.subheader('Zeitverlauf der GND-Datensatzerstellung')
@@ -191,162 +189,191 @@ def stat_allgemein():
         alt.Y('count:Q', title='Sätze pro Monat'),
         tooltip=['count']
     )
-    st.altair_chart(created, use_container_width=True)
+    return st.altair_chart(created, use_container_width=True)
+
+def entities():
+    #GND-Entitäten nach Satzart und Katalogisierungslevel
+    df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
+    df['level'] = df.entity.str[2:3]
+    df.entity = df.entity.str[:2]
+
+    if satzart == 'alle':
+
+        entity_count = alt.Chart(df).mark_bar().encode(
+            alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
+            alt.Y('entity', title='Satzart'),
+            alt.Color('level', title='Katalogisierungslevel'),
+            tooltip=['count']
+        )
+        st.subheader('Entitäten und Katalogisierungslevel')
+
+    else:
+
+        entity_count = alt.Chart(df.loc[df['entity'].str.startswith(satzart[:2])]).mark_bar().encode(
+            alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
+            alt.Y('entity', title='Satzart'),
+            alt.Color('level', title='Katalogisierungslevel'),
+            tooltip=['count']
+        )
+        st.subheader(f'Katalogisierungslevel in Satzart {satzart}')
+    st.write('Alle GND-Entitäten können in verschiedenen Katalogisierungsleveln (1-7) angelegt werden. Je niedriger das Katalogisierungslevel, desto verlässlicher die Daten, weil Sie dann von qualifizierten Personen erstellt bzw. überprüft wurden.')
+    return st.altair_chart(entity_count, use_container_width=True)
+
+def newcomer():
+    #TOP 10 der Entitäten, die in den letzten 365 Tagen erstellt wurden
+    if satzart == 'alle':
+        st.subheader(f'TOP 10 GND-Newcomer')
+        st.write('TOP 10 der GND-Entitäten, die in den letzten 365 Tagen angelegt wurden.')
+        newcomer_daten = pd.read_csv(f'{path}/../stats/title_gnd_newcomer_top10.csv', index_col=None)
+
+        newcomer = alt.Chart(newcomer_daten).mark_bar().encode(
+            alt.X('gnd_id', title='Entitäten', sort='-y'),
+            alt.Y('count', title='Anzahl'),
+            alt.Color('name', sort='-y', title='Entität'),
+            tooltip=['count'],
+        )
+
+    else:
+        st.subheader(f'TOP 10 {satzart} GND-Newcomer')
+        st.write(f'TOP 10 der {satzart} Sätze, die in den letztn 365 Tagen angelegt wurden.')
+        newcomer_daten = load_gnd_top_daten('newcomer_top10')
+
+        newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
+            alt.X('name', title='Entitäten', sort='-y'),
+            alt.Y('count', title='Anzahl'),
+            alt.Color('name', sort='-y', title='Entität'),
+            tooltip=['count'],
+        )
+    st.altair_chart(newcomer, use_container_width=True)
+
+def gnd_top():
+    #TOP 10 GND-Entitäten in DNB-Titeldaten, nach Satzart gefiltert
+    if satzart == 'alle':
+        st.subheader(f'TOP 10 GND-Entitäten in DNB-Titeldaten')
+        top_daten = pd.read_csv(f'{path}/../stats/title_gnd_top10.csv', index_col=None)
+
+        gnd_top = alt.Chart(top_daten).mark_bar().encode(
+            alt.X('gnd_id:N', title='Entitäten', sort='-y'),
+            alt.Y('count:Q', title='Anzahl'),
+            alt.Color('name:N', sort='-y', title='Entität'),
+            tooltip=['count:Q'],
+        )
+
+    else:
+        st.subheader(f'TOP 10 {satzart} in DNB-Titeldaten')
+        top_daten = load_gnd_top_daten('top10')
+
+        gnd_top = alt.Chart(top_daten.loc[top_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
+            alt.X('gnd_id:N', title='Entitäten', sort='-y'),
+            alt.Y('count:Q', title='Anzahl'),
+            alt.Color('name:N', sort='-y', title='Entität'),
+            tooltip=['count:Q'],
+        )
+    st.write('Verknüpfungen, die maschinell erzeugt wurden, aus Fremddaten stammen oder verwaist sind, wurden nicht in die Auswertung einbezogen. Eine detaillierte Auflistung der ausgewerteten Felder ist im [GitHub-Repository](https://git.io/JG5vN) dieses Dashboards dokumentiert.')
+    st.altair_chart(gnd_top, use_container_width=True)
+
+def dnb_links():
+    #GND-Verknüpfungen in DNB Titeldaten
+    if satzart == 'alle':
+        #Anzahl GND-Verknüpfungen in DNB-Titeldaten
+        with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
+            links = f'{int(f.read()):,}'
+        
+        #GND-Entitäten maschinell verknüpft
+        with open(f"{path}/../stats/title_gnd_links_auto.csv", "r") as f:
+            auto_entites = int(f.read())
+
+        #GND-Entitäten aus Fremddaten
+        with open(f"{path}/../stats/title_gnd_links_ext.csv", "r") as f:
+            fremd_entities = int(f.read())
+
+        #Anzahl der intellktuell verknüpften GND-Entitäten in DNB-Titeldaten
+        with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
+            uniques = int(f.read())
+            uniques_str = f'{uniques:,}'
+
+        #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
+        with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
+            mean = str(round(float(f.read()),2)).replace('.',',')
+
+        st.write(f"{links.replace(',','.')} intellektuell vergebene Verknüpfungen zu {uniques_str.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
+
+        entity_df = pd.DataFrame.from_dict({"intellektuell verknüpfte Entitäten": uniques, "Entitäten aus automatischen Prozessen": auto_entites, "Entitäten aus Fremddaten": fremd_entities}, orient = "index").reset_index()
+        entity_df = entity_df.rename(columns={"index":"Datenart", 0:"Anzahl"})
+        st.subheader('Datenherkunft der GND-Entitäten in DNB-Titeldaten')
+        st.write('Weniger als ein Drittel der GND-Entitäten in DNB-Titeldaten wurde in intellektuellen Erschließungsprozessen vergeben. Jeweils ca. ein weiteres Drittel wurde in maschinellen Erschließungsprozessen vergeben, ca. ein Drittel stammt aus Fremddaten.')
+        entities = alt.Chart(entity_df).mark_bar().encode(
+            alt.X('sum(Datenart):N', title='Datenart'),
+            alt.Y('sum(Anzahl):Q', title='Anzahl'),
+            color='Datenart',
+            tooltip='Anzahl:N'
+        )
+        st.altair_chart(entities, use_container_width=True)
+
+        
+    else:
+        with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
+            mean = str(round(float(f.read()),2)).replace('.',',')
+        st.write(f'Durchschnittlich {mean} Verknüpfungen zu {satzart}-Sätzen pro DNB-Titeldatensatz')
 
 #main
 st.title('GND-Dashboard')
-st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und Sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
-with st.beta_expander("Methodik und Datenherkunft"):
-    st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
 
-Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers [pica.rs](https://github.com/deutsche-nationalbibliothek/pica-rs) gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
+#infoebereich oben
+with st.beta_container():
+    st.write("This is inside the container")
 
-Das Dashboard ist mit dem Python-Framework [Streamlit](https://streamlit.io/) geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf [Github](https://github.com/buchmuseum/GND_Dashboard) zu finden. Die Diagramme wurden mit [Altair](https://altair-viz.github.io/index.html) erstellt, die Karten mit [Deck GL](https://deck.gl/) (via [Pydeck](https://deckgl.readthedocs.io/en/latest/#)), die Wordcloud mit [wordcloud](https://amueller.github.io/word_cloud/index.html).
+    st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und Sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
+    with st.beta_expander("Methodik und Datenherkunft"):
+        st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
 
-Für grundlegende Zugriffsstatistik verwenden wir [streamlit-analytics](https://pypi.org/project/streamlit-analytics/). Dabei werden keine personenbezogenen Daten gespeichert.
+    Der Gesamtabzug liegt im OCLC-Format PICA+ vor. Die Daten werden mithilfe des Pica-Parsers [pica.rs](https://github.com/deutsche-nationalbibliothek/pica-rs) gefiltert. Dieses Tool produziert aus dem sehr großen Gesamtabzug (~ 31 GB) kleinere CSV-Dateien, die mit Python weiterverarbeitet werden.
 
-Alle Skripte und Daten stehen unter CC0 Lizenz und können frei weitergenutzt werden.
+    Das Dashboard ist mit dem Python-Framework [Streamlit](https://streamlit.io/) geschrieben. Die Skripte sowie die gefilterten CSV-Rohdaten sind auf [Github](https://github.com/buchmuseum/GND_Dashboard) zu finden. Die Diagramme wurden mit [Altair](https://altair-viz.github.io/index.html) erstellt, die Karten mit [Deck GL](https://deck.gl/) (via [Pydeck](https://deckgl.readthedocs.io/en/latest/#)), die Wordcloud mit [wordcloud](https://amueller.github.io/word_cloud/index.html).
 
-Die Daten werden monatlich aktualisiert.
-    ''')
+    Für grundlegende Zugriffsstatistik verwenden wir [streamlit-analytics](https://pypi.org/project/streamlit-analytics/). Dabei werden keine personenbezogenen Daten gespeichert.
 
-#Entities nach Typ
-df = pd.read_csv(f'{path}/../stats/gnd_entity_types.csv', index_col=False, names=['entity','count'])
-df['level'] = df.entity.str[2:3]
-df.entity = df.entity.str[:2]
+    Alle Skripte und Daten stehen unter CC0 Lizenz und können frei weitergenutzt werden.
 
-if satzart == 'alle':
+    Die Daten werden monatlich aktualisiert.
+        ''')
 
-    entity_count = alt.Chart(df).mark_bar().encode(
-        alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
-        alt.Y('entity', title='Satzart'),
-        alt.Color('level', title='Katalogisierungslevel'),
-        tooltip=['count']
-    )
-    st.subheader('Entitäten und Katalogisierungslevel')
+#sidebar mit satzartenfilter
+st.sidebar.header("Satzart wählen")
+satzart = st.sidebar.selectbox(
+    "Über welche GND-Satzart möchten Sie etwas erfahren?",
+    ('alle', "Tp - Personen", "Tb - Körperschaften", "Tg - Geografika", "Ts - Sachbegriffe", "Tu - Werke", "Tf - Veranstaltungen")
+)
+st.sidebar.info('Diese Widgets haben die GitHub-User [niko2342](https://github.com/niko2342/), [ramonvoges](https://github.com/ramonvoges), [a-wendler](https://github.com/a-wendler/) sowie Christian Baumann geschrieben. Sie gehören zur Python Community der Deutschen Nationalbibliothek.')
 
-else:
-
-    entity_count = alt.Chart(df.loc[df['entity'].str.startswith(satzart[:2])]).mark_bar().encode(
-        alt.X('sum(count)', title='Datensätze pro Katalogisierungslevel'),
-        alt.Y('entity', title='Satzart'),
-        alt.Color('level', title='Katalogisierungslevel'),
-        tooltip=['count']
-    )
-    st.subheader(f'Katalogisierungslevel in Satzart {satzart}')
-st.write('Alle GND-Entitäten können in verschiedenen Katalogisierungsleveln (1-7) angelegt werden. Je niedriger das Katalogisierungslevel, desto verlässlicher die Daten, weil Sie dann von qualifizierten Personen erstellt bzw. überprüft wurden.')
-st.altair_chart(entity_count, use_container_width=True)
-
-#gnd-newcomer
-if satzart == 'alle':
-    st.subheader(f'TOP 10 GND-Newcomer')
-    st.write('TOP 10 der GND-Entitäten, die in den letzten 365 Tagen angelegt wurden.')
-    newcomer_daten = pd.read_csv(f'{path}/../stats/title_gnd_newcomer_top10.csv', index_col=None)
-
-    newcomer = alt.Chart(newcomer_daten).mark_bar().encode(
-        alt.X('gnd_id', title='Entitäten', sort='-y'),
-        alt.Y('count', title='Anzahl'),
-        alt.Color('name', sort='-y', title='Entität'),
-        tooltip=['count'],
-    )
-
-else:
-    st.subheader(f'TOP 10 {satzart} GND-Newcomer')
-    st.write(f'TOP 10 der {satzart} Sätze, die in den letztn 365 Tagen angelegt wurden.')
-    newcomer_daten = load_gnd_top_daten('newcomer_top10')
-
-    newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
-        alt.X('name', title='Entitäten', sort='-y'),
-        alt.Y('count', title='Anzahl'),
-        alt.Color('name', sort='-y', title='Entität'),
-        tooltip=['count'],
-    )
-st.altair_chart(newcomer, use_container_width=True)
-
-if satzart == 'alle':
-    stat_allgemein()
-
-elif satzart == "Tp - Personen":
-    #hier werden dann alle widgets als einzelne funktionen aufgerufen, die zur jeweiligen Kategorie gehören sollen
-    ramon()
-
-elif satzart == "Tg - Geografika":
-    wirkungsorte_musik()
-    ramon()
-
-elif satzart == "Ts - Sachbegriffe":
-    sachbegriff_cloud()
-
-
-st.header('GND in der Deutschen Nationalbibliothek')
-
-#top_diagram mit Satzartfilter
-if satzart == 'alle':
-    st.subheader(f'TOP 10 GND-Entitäten in DNB-Titeldaten')
-    top_daten = pd.read_csv(f'{path}/../stats/title_gnd_top10.csv', index_col=None)
-
-    gnd_top = alt.Chart(top_daten).mark_bar().encode(
-        alt.X('gnd_id:N', title='Entitäten', sort='-y'),
-        alt.Y('count:Q', title='Anzahl'),
-        alt.Color('name:N', sort='-y', title='Entität'),
-        tooltip=['count:Q'],
-    )
-
-else:
-    st.subheader(f'TOP 10 {satzart} in DNB-Titeldaten')
-    top_daten = load_gnd_top_daten('top10')
-
-    gnd_top = alt.Chart(top_daten.loc[top_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
-        alt.X('gnd_id:N', title='Entitäten', sort='-y'),
-        alt.Y('count:Q', title='Anzahl'),
-        alt.Color('name:N', sort='-y', title='Entität'),
-        tooltip=['count:Q'],
-    )
-st.write('Verknüpfungen, die maschinell erzeugt wurden, aus Fremddaten stammen oder verwaist sind, wurden nicht in die Auswertung einbezogen. Eine detaillierte Auflistung der ausgewerteten Felder ist im [GitHub-Repository](https://git.io/JG5vN) dieses Dashboards dokumentiert.')
-st.altair_chart(gnd_top, use_container_width=True)
-
-#Durchschnittliche Verknüpfungen pro Satzart
-
-if satzart == 'alle':
-    #Anzahl GND-Verknüpfungen in DNB-Titeldaten
-    with open(f"{path}/../stats/title_gnd_links.csv", "r") as f:
-        links = f'{int(f.read()):,}'
+gnd_allgemein = st.beta_container()
+with gnd_allgemein:
+    st.header('GND Statistik allgemein')
+    #allgemeine statistiken in abhängigkeit der satzart
+    if satzart == 'alle':
+        gesamt_entity_count()
+        entities()
+        newcomer()
+        zeitverlauf()
+        relationen()
+        systematik()
+    else:
+        entities()
+        newcomer()
     
-    #GND-Entitäten maschinell verknüpft
-    with open(f"{path}/../stats/title_gnd_links_auto.csv", "r") as f:
-        auto_entites = int(f.read())
+    #besondere widgets für einzelne satzarten
+    if satzart == "Tp - Personen":
+        wirkungsorte()
+    elif satzart == "Tg - Geografika":
+        wirkungsorte_musik()
+        wirkungsorte()
+    elif satzart == "Ts - Sachbegriffe":
+        sachbegriff_cloud()
 
-    #GND-Entitäten aus Fremddaten
-    with open(f"{path}/../stats/title_gnd_links_ext.csv", "r") as f:
-        fremd_entities = int(f.read())
-
-    #Anzahl der intellktuell verknüpften GND-Entitäten in DNB-Titeldaten
-    with open(f"{path}/../stats/title_gnd_links_unique.csv", "r") as f:
-        uniques = int(f.read())
-        uniques_str = f'{uniques:,}'
-
-    #Durchschnittliche Anzahl an GND-Verknüpfungen pro DNB-Titeldatensatz
-    with open(f"{path}/../stats/title_gnd_mean.csv", "r") as f:
-        mean = str(round(float(f.read()),2)).replace('.',',')
-
-    st.write(f"{links.replace(',','.')} intellektuell vergebene Verknüpfungen zu {uniques_str.replace(',','.')} GND-Entitäten in den DNB-Titeldaten. Durchschnittlich {mean} GND-Verknüpfungen pro DNB-Titeldatensatz")
-
-    entity_df = pd.DataFrame.from_dict({"intellektuell verknüpfte Entitäten": uniques, "Entitäten aus automatischen Prozessen": auto_entites, "Entitäten aus Fremddaten": fremd_entities}, orient = "index").reset_index()
-    entity_df = entity_df.rename(columns={"index":"Datenart", 0:"Anzahl"})
-    st.subheader('Datenherkunft der GND-Entitäten in DNB-Titeldaten')
-    st.write('Weniger als ein Drittel der GND-Entitäten in DNB-Titeldaten wurde in intellektuellen Erschließungsprozessen vergeben. Jeweils ca. ein weiteres Drittel wurde in maschinellen Erschließungsprozessen vergeben, ca. ein Drittel stammt aus Fremddaten.')
-    entities = alt.Chart(entity_df).mark_bar().encode(
-        alt.X('sum(Datenart):N', title='Datenart'),
-        alt.Y('sum(Anzahl):Q', title='Anzahl'),
-        color='Datenart',
-        tooltip='Anzahl:N'
-    )
-    st.altair_chart(entities, use_container_width=True)
-
-    
-else:
-    with open(f"{path}/../stats/title_gnd_mean_{satzart[:2]}.csv", "r") as f:
-        mean = str(round(float(f.read()),2)).replace('.',',')
-    st.write(f'Durchschnittlich {mean} Verknüpfungen zu {satzart}-Sätzen pro DNB-Titeldatensatz')
+dnb = st.beta_container()
+with dnb:
+    st.header('GND in der Deutschen Nationalbibliothek')
+    gnd_top()
+    dnb_links()
 
 streamlit_analytics.stop_tracking()
