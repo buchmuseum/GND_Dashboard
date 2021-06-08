@@ -1,3 +1,4 @@
+from matplotlib.pyplot import title
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -230,7 +231,7 @@ def newcomer():
             alt.X('gnd_id', title='Entitäten', sort='-y'),
             alt.Y('count', title='Anzahl'),
             alt.Color('name', sort='-y', title='Entität'),
-            tooltip=['count'],
+            tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('bbg:N', title='Satzart'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')],
         )
 
     else:
@@ -321,8 +322,6 @@ st.title('GND-Dashboard')
 
 #infoebereich oben
 with st.beta_container():
-    st.write("This is inside the container")
-
     st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Mai 2021). Wählen Sie links die Satzart, die Sie interessiert, und Sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
     with st.beta_expander("Methodik und Datenherkunft"):
         st.write('''Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
