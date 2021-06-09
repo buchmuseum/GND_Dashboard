@@ -49,7 +49,7 @@ def wirkungsorte():
     st.markdown('Von allen Personensätzen (Tp) weisen 782.682 Angaben zum Wirkungsort der jeweiligen Person auf.')
 
     #Balkendiagramm
-    orte_filt = st.slider('Zeige Top ...', min_value=3, max_value=len(df), value=10, step=1)
+    orte_filt = st.slider('Zeige Top …', min_value=3, max_value=len(df), value=10, step=1)
     graph_count = alt.Chart(df.nlargest(orte_filt, 'Anzahl', keep='all')).mark_bar().encode(
         alt.X('Name:N', sort='y'),
         alt.Y('Anzahl'),
