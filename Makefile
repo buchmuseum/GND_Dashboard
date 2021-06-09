@@ -138,7 +138,10 @@ title-analysis: $(USERDIR)/0XXX_9.csv $(USERDIR)/044H_9.csv $(USERDIR)/044K_9.cs
 $(STATSDIR)/gnd_systematik.csv: $(USERDIR)/gnd.dat
 	$(PICA) frequency "042A.a" $< -o $@
 
-gnd-analysis: $(USERDIR)/0XXR.csv $(STATSDIR)/gnd_systematik.csv
+$(STATSDIR)/gnd_systematik_Ts.csv: $(USERDIR)/gnd.dat
+	$(PICA) filter "002@.0 =^ 'Ts'" $< | $(PICA) frequency "042A.a" -o $@
+
+gnd-analysis: $(USERDIR)/0XXR.csv $(STATSDIR)/gnd_systematik.csv $(STATSDIR)/gnd_systematik_Ts.csv
 	$(SCRIPTS)/gnd.py
 
 
