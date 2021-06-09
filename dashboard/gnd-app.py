@@ -169,7 +169,7 @@ def systematik():
     classification = pd.read_csv(f'{path}/../stats/gnd_classification_all.csv', index_col=False)
     st.subheader('Systematik')
     st.write('Die Entitäten der GND können in eine Systematik eingeordnet werden. Die Liste der möglichen Notationen gibt es [hier](http://www.dnb.de/gndsyst).')
-    class_filt = st.slider('Zeige Top ...', 5, len(classification), 10, 1)
+    class_filt = st.slider('Zeige Top …', 5, len(classification), 10, 1)
     classification_count = alt.Chart(classification.nlargest(class_filt, 'count', keep='all')).mark_bar().encode(
         alt.X('id', title='Notation', sort='-y'),
         alt.Y('count', title='Anzahl'),
@@ -177,6 +177,21 @@ def systematik():
         tooltip=[alt.Tooltip('id', title='Notation'), alt.Tooltip('name', title='Bezeichnung'), alt.Tooltip('count', title='Anzahl')]
     )
     return st.altair_chart(classification_count, use_container_width=True)
+
+def systematik_ts():
+    #Ranking der Systematik von Ts-Sätzen
+    classification_ts = pd.read_csv(f'{path}/../stats/gnd_classification_Ts_all.csv', index_col=False)
+    st.dataframe(classification_ts)
+    st.subheader('Systematik der Sachbegriffe')
+    st.write('Die Entitäten der GND können in eine Systematik eingeordnet werden. Hier sind die Systematik-Notationen der Sachbegriffe (Ts) aufgetragen. Die Liste der möglichen Notationen gibt es [hier](http://www.dnb.de/gndsyst).')
+    class_ts_filt = st.slider('Zeige TOP …', min_value=5, max_value=len(classification_ts), value=10, step=1)
+    classification_ts_count = alt.Chart(classification_ts.nlargest(class_ts_filt, 'count', keep='all')).mark_bar().encode(
+        alt.X('id:N', title='Notation', sort='-y'),
+        alt.Y('count:Q', title='Anzahl'),
+        alt.Color('name:N', sort='-y', title='Bezeichnung'),
+        tooltip = [alt.Tooltip('id', title='Notation'), alt.Tooltip('name', title='Bezeichnung'), alt.Tooltip('count', title='Bezeichnung')]
+    )
+    return st.altair_chart(classification_ts_count, use_container_width=True)
 
 def zeitverlauf():
     #zeitverlauf der erstellung der GND-Sätze ab Januar 1972
@@ -369,6 +384,7 @@ with gnd_allgemein:
         wirkungsorte()
     elif satzart == "Ts - Sachbegriffe":
         sachbegriff_cloud()
+        systematik_ts()
 
 dnb = st.beta_container()
 with dnb:
