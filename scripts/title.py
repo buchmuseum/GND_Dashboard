@@ -136,14 +136,14 @@ def main():
 
     # Maschinell verknüpft
     df = pd.read_csv(
-        "data/044H_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+        "data/user/044H_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
     )
     with open("stats/title_gnd_links_auto.csv", "w") as f:
         f.write(str(len(df)))
 
     # Aus Fremddaten
     df = pd.read_csv(
-        "data/044K_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
+        "data/user/044K_9.csv", low_memory=False, names=["idn", "gnd_id", "name"]
     )
     with open("stats/title_gnd_links_ext.csv", "w") as f:
         f.write(str(len(df)))

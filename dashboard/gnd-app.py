@@ -22,7 +22,7 @@ def load_gnd_top_daten(typ):
 def sachbegriff_cloud():
     #wordcloud der top 100 sachbegriffe eines auszuwählenden tages der letzten 10 werktage
     st.header('TOP 100 Sachbegriffe pro Tag')
-    st.write('Wählen Sie ein Datum aus den letzten 10 Werktagen und sehen Sie eine Wordcloud der 100 meistverwendeten GND-Sachbegriffe dieses Tages- Die Größe des Begriffes entspricht der Häufigkeit des Sachbegriffs')
+    st.write('Wählen Sie ein Datum aus den letzten 10 Werktagen vor der letzten Aktualisierung der Daten des Dashboards und sehen Sie eine Wordcloud der 100 meistverwendeten GND-Sachbegriffe dieses Tages. Die Größe des Begriffes entspricht der Häufigkeit des Sachbegriffs.')
     files = glob.glob(f'{path}/../stats/*Ts-count.csv')
     daten = [x[-23:-13] for x in files]
     daten.sort()
@@ -254,7 +254,7 @@ def newcomer():
         newcomer_daten = load_gnd_top_daten('newcomer_top10')
 
         newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
-            alt.X('name', title='Entitäten', sort='-y'),
+            alt.X('gnd_id:O', title='Entitäten', sort='-y'),
             alt.Y('count', title='Anzahl'),
             alt.Color('name', sort='-y', title='Entität'),
             tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')]
@@ -336,7 +336,7 @@ st.title('GND-Dashboard')
 
 #infoebereich oben
 with st.beta_container():
-    st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Juni 2021). Wählen Sie links die Satzart, die Sie interessiert, und Sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
+    st.info('Hier finden Sie statistische Auswertungen der GND und ihrer Verknüpfungen mit den Titeldaten der Deutschen Nationalbibliothek (Stand der Daten: Juli 2021). Wählen Sie links die Satzart, die Sie interessiert, und Sie erhalten die verfügbaren Auswertungen und Statstiken. Verwenden Sie einen auf Chromium basierenden Browser.')
     with st.beta_expander("Methodik und Datenherkunft"):
         st.markdown('''
 Datengrundlage ist ein Gesamtabzug der Daten der Gemeinsamen Normadatei (GND) sowie der Titeldaten der Deutschen Nationalbibliothek (DNB) inkl. Zeitschriftendatenbank (ZDB), sofern sich Exemplare der Zeitschrift im Bestand der DNB befinden. In den Titeldaten ist auch der Tonträger- und Notenbestand des Deutschen Musikarchivs (DMA) sowie der Buch- und Objektbestand des Deutschen Buch- und Schriftmuseums (DBSM) nachgewiesen.
