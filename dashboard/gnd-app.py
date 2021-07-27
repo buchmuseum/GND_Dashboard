@@ -22,7 +22,7 @@ def load_gnd_top_daten(typ):
 def sachbegriff_cloud():
     #wordcloud der top 100 sachbegriffe eines auszuwählenden tages der letzten 10 werktage
     st.header('TOP 100 Sachbegriffe pro Tag')
-    st.write('Wählen Sie ein Datum aus den letzten 10 Werktagen und sehen Sie eine Wordcloud der 100 meistverwendeten GND-Sachbegriffe dieses Tages- Die Größe des Begriffes entspricht der Häufigkeit des Sachbegriffs')
+    st.write('Wählen Sie ein Datum aus den letzten 10 Werktagen vor der letzten Aktualisierung der Daten des Dashboards und sehen Sie eine Wordcloud der 100 meistverwendeten GND-Sachbegriffe dieses Tages- Die Größe des Begriffes entspricht der Häufigkeit des Sachbegriffs')
     files = glob.glob(f'{path}/../stats/*Ts-count.csv')
     daten = [x[-23:-13] for x in files]
     daten.sort()
