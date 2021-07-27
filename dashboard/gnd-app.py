@@ -254,7 +254,7 @@ def newcomer():
         newcomer_daten = load_gnd_top_daten('newcomer_top10')
 
         newcomer = alt.Chart(newcomer_daten.loc[newcomer_daten['bbg'].str.startswith(satzart[:2], na=False)]).mark_bar().encode(
-            alt.X('name', title='Entitäten', sort='-y'),
+            alt.X('gnd_id:O', title='Entitäten', sort='-y'),
             alt.Y('count', title='Anzahl'),
             alt.Color('name', sort='-y', title='Entität'),
             tooltip=[alt.Tooltip('name:N', title='Entität'), alt.Tooltip('gnd_id:N', title='IDN'), alt.Tooltip('count:Q', title='Anzahl')]

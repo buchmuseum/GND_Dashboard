@@ -7,10 +7,10 @@ import pandas as pd
 
 
 def main():
-    gnd_data = pd.read_csv("data/gnd.csv", low_memory=False)
+    gnd_data = pd.read_csv("data/user/gnd.csv", low_memory=False)
 
     df_0XXR = pd.read_csv(
-        "data/0XXR.csv", names=["idn", "gnd_id", "name", "code"], low_memory=False
+        "data/user/0XXR.csv", names=["idn", "gnd_id", "name", "code"], low_memory=False
     )
 
     df_0XXR = pd.merge(df_0XXR, gnd_data[["gnd_id", "bbg"]], on="gnd_id", how="left")
